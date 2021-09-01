@@ -1,0 +1,28 @@
+{
+  "name": "q-portfolio",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Q Portfolio",
+  "author": {
+    "name": "Chakrit W.",
+    "email": "quaos.qrz@gmail.com",
+    "url": "https://qpstudio.cc"
+  },
+  "repository": {
+    "gitlab": "https://gitlab.com/quaos.qrz/q-portfolio"
+  },
+  "scripts": {
+    "lint": "deno lint --unstable src/client.tsx",
+    "build": "deno bundle --config tsconfig.json src/client.tsx public/assets/js/client.bundle.js",
+    "__build_with_sw": "deno bundle --config tsconfig.json src/client.tsx public/assets/js/client.bundle.js && deno bundle --config src/service-worker/tsconfig.json src/service-worker/service-worker.ts public/assets/js/service-worker.js",
+    "build-sw": "deno bundle --config src/service-worker/tsconfig.json src/service-worker/service-worker.ts public/assets/js/service-worker.js",
+    "start": "deno run --allow-env --allow-net --allow-read --allow-run main.ts -- --browse serve",
+    "debug": "deno run --allow-env --allow-net --allow-read --allow-run --watch main.ts -- --browse serve",
+    "_debug_denon": "denon start",
+    "cache": "deno cache src/deps/*.ts"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "webpack-bundle-analyzer": "^4.4.0"
+  }
+}

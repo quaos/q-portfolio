@@ -1,0 +1,98 @@
+section {
+  margin-left: 1em;
+}
+
+/* Custom sized elements */
+
+hr {
+  max-width: none;
+  height: 4em;
+}
+
+.section-title {
+  text-align: center;
+  margin-top: 0.5em;
+  /*background-image: url("assets/img/box-1.png");
+background-attachment: scroll;
+background-repeat: no-repeat;
+background-position: center;
+background-size: 100% 100%;*/
+}
+
+.framing-left {
+  width: 4em;
+  height: 4em;
+  margin-right: -2em;
+  margin-bottom: 2em;
+}
+.framing-right {
+  width: 4em;
+  height: 4em;
+  margin-left: -2em;
+  margin-top: 2em;
+}
+
+.portfolio-item-wrapper {
+  background-color: black;
+}
+
+.portfolio-item {
+  /* width: fit-content; */
+  /* background-color: #fffff0; */
+  text-align: center;
+  padding: 1em;
+  border-radius: 3em 0 0 0;
+}
+
+.portfolio-item img {
+  /* float: left; */
+  width: auto;
+  height: 300px;
+}
+
+.portfolio-item .description {
+  float: right;
+  max-width: 33%;
+  margin-left: 1em;
+}
+
+.portfolio-item .description h2,
+.portfolio-item .description p {
+  color: #c0c0c0;
+}
+
+.portfolio-item .description h2 {
+  text-shadow: 2px 2px 2px #666;
+}
+.portfolio-item .description p {
+  text-shadow: 1px 1px 1px #666;
+}
+
+.portfolio-item .tags {
+  clear: both;
+  float: left;
+  margin-top: 0.5em;
+}
+
+/* Bootstrap hacks */
+
+.carousel-control-prev,
+.carousel-control-next {
+  width: fit-content;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Responsive Devices */
+
+@media screen and (max-width: 600px) {
+    .portfolio-item img {
+        float: left;
+        width: 100%;
+        height: auto;
+    }
+
+    .portfolio-item .description {
+        float: left;
+        max-width: 100%;
+    }
+}

@@ -1,0 +1,162 @@
+[
+    {
+        "id": "portGroup1",
+        "title": "Enterprise Systems Integration",
+        "items": [
+            {
+                "id": "portItem_1_1_as400",
+                "title": "AS/400 Integration Middleware",
+                "image": {
+                    "url": "assets/img/portfolio-item-2-aspnet-tms.png",
+                    "title": "AS400 Integration Middleware screenshot"
+                },
+                "description": "Automated IVR (Interactive Voice Response) solution for a network marketing company's call center.\nIt receives customer calls and connects through developed JavaEE middleware to client's AS/400 screen to retrieve data.\n"
+            },
+            {
+                "id": "portItem_1_2_wmq",
+                "title": "WebSphereMQ Integration Middleware",
+                "image": {
+                    "url": "assets/img/portfolio-item-2-aspnet-tms.png",
+                    "title": "WebSphereMQ Integration Middleware screenshot"
+                },
+                "description": "This JavaEE application for a banking client accepts web service requests from frontend and dispatch to other services through Websphere MQ backbone to query information.\n"
+            }
+        ],
+        "tags": [
+            "java",
+            "tomcat",
+            "spring",
+            "soap",
+            "rest",
+            "mysql",
+            "mssql",
+            "networking",
+            "as400",
+            "websphere-mq",
+            "ivr",
+            "salesforce",
+            "rightfax",
+            "contact-center",
+            "computer-telephony"
+        ]
+    },
+    {
+        "id": "portGroup2",
+        "title": "Enterprise CMS/Resources Management",
+        "items": [
+            {
+                "id": "portItem_2_1_enterpriseCms",
+                "title": "Transport Management System on ASP.NET",
+                "image": {
+                    "url": "assets/img/portfolio-item-2-aspnet-tms.png",
+                    "title": "Transport Management System screenshot"
+                },
+                "description": "I worked on some modules of this app for an Import/Export company.\nMostly dealing with vehicles maintenance and trips.\n"
+            },
+            {
+                "id": "portItem_2_2_paymentRefund",
+                "title": "Payment & Refunds System",
+                "image": {
+                    "url": "assets/img/portfolio-item-2-aspnet-tms.png",
+                    "title": "Payment & Refunds System screenshot"
+                },
+                "description": "Node.JS backend of Payment & Refunds web application for financial-related business.\nUsers can generate and send links to end customers for payment via payment gateway service."
+            }
+        ],
+        "tags": [
+            "c#",
+            ".net",
+            "crystalreports",
+            "mssql",
+            "iis",
+            "windows",
+            "html",
+            "javascript",
+            "nodejs",
+            "jquery",
+            "payment-gateway"
+        ]
+    },
+    {
+        "id": "portGroup4",
+        "title": "Fullstack Web Development",
+        "items": [
+            {
+                "id": "portitem_3_1_qpstudio",
+                "title": "QP Studio Website",
+                "image": {
+                    "url": "assets/img/portfolio-item-1-qpweb.png",
+                    "title": "qpstudio.cc website screenshot"
+                },
+                "description": "My little creative studio"
+            },
+            {
+                "id": "portItem_3_2_mern_shopping",
+                "title": "MERN Stack Shopping website",
+                "image": {
+                    "url": "assets/img/portfolio-item-3-mern-shopping.png",
+                    "title": "MERN stack shopping website screenshot"
+                },
+                "description": "A client's shopping website."
+            }
+        ],
+        "tags": [
+            "javascript",
+            "typescript",
+            "nodejs",
+            "reactjs",
+            "html5",
+            "css",
+            "material-ui",
+            "webgl",
+            "game-dev",
+            "deno",
+            "postgresql",
+            "mongodb",
+            "sendgrid"
+        ]
+    },
+    {
+        "id": "portGroup4",
+        "title": "Batches & System Programming",
+        "items": [
+            {
+                "id": "portItem_4_1_etl",
+                "title": "ETL Solution",
+                "image": {
+                    "url": "assets/img/portfolio-item-3-mern-shopping.png",
+                    "title": "ETL Solution screenshot"
+                },
+                "description": "ETL (Extract, Transfer, Load) is for data operations.\nThis solution, consisting of SQL SSIS packages and jobs, is for an international insurance company that needs their data transferred daily and monthly from across countries for local use."
+            }
+        ],
+        "tags": [
+            "c#",
+            "c++",
+            "javascript",
+            "shellscript",
+            "batch-file",
+            "linux",
+            "windows",
+            "rust",
+            "mssql",
+            "ssis"
+        ]
+    },
+    {
+        "id": "portGroup10",
+        "title": "Side Projects & Opensources",
+        "items": [
+
+        ],
+        "tags": [
+            "javascript",
+            "typescript",
+            "nodejs",
+            "reactjs",
+            "deno",
+            "chatbot",
+            "line-api"
+        ]
+    }
+]

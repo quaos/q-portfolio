@@ -1,0 +1,56 @@
+@media print {  
+  .portfolio-item-wrapper {
+    width: 100%;
+    position: relative;
+    background-color: rgba(0,0,0,0);
+    break-inside: avoid;
+  }
+
+  .portfolio-item {
+    width: 100%;
+    position: relative;
+    clear: both;
+    break-inside: avoid;
+  }
+  
+  .portfolio-item img {
+    float: left;
+    max-width: 60%;
+    break-inside: avoid;
+  }
+
+  .portfolio-item .description h2,
+  .portfolio-item .description p {
+    color: black;
+  }
+  
+  .portfolio-item .description h2 {
+    text-shadow: none;
+  }
+  .portfolio-item .description p {
+    text-shadow: none;
+  }
+  
+  /* Bootstrap hacks */
+
+  .carousel-indicators {
+    display: none;
+  }
+
+  .carousel-control-prev,
+  .carousel-control-next {
+    display: none;
+  }
+  
+  .carousel-inner {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .carousel-item {
+    display: flex; /* display all slides for print media */
+    width: 100%;
+    transition: none;
+    transform: none;
+  }
+}

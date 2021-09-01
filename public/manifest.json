@@ -1,0 +1,15 @@
+{
+    "short_name": "QPStudio_Web",
+    "name": "QP Studio Main Website",
+    "icons": [
+        {
+            "src": "assets/img/QP_MinimalLogo-512x512.png",
+            "sizes": "512x512 384x384 256x256 192x192 128x128 64x64 32x32 24x24 16x16",
+            "type": "image/png"
+        }
+    ],
+    "start_url": "/",
+    "display": "standalone",
+    "theme_color": "#000000",
+    "background_color": "#ffffff"
+}
