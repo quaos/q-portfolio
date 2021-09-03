@@ -5,4 +5,5 @@ export interface PortfolioItem {
   image: Image;
   title: string;
   description: string;
+  visible?: boolean;
 }

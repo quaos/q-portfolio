@@ -10,7 +10,7 @@
                     "url": "assets/img/portfolio-item-2-aspnet-tms.png",
                     "title": "AS400 Integration Middleware screenshot"
                 },
-                "description": "Automated IVR (Interactive Voice Response) solution for a network marketing company's call center.\nIt receives customer calls and connects through developed JavaEE middleware to client's AS/400 screen to retrieve data.\n"
+                "description": "Automated IVR (Interactive Voice Response) solution for a network marketing company's call center.\n\nIt receives customer calls and connects through developed JavaEE middleware to client's AS/400 screen to retrieve data.\n\n"
             },
             {
                 "id": "portItem_1_2_wmq",
@@ -19,7 +19,7 @@
                     "url": "assets/img/portfolio-item-2-aspnet-tms.png",
                     "title": "WebSphereMQ Integration Middleware screenshot"
                 },
-                "description": "This JavaEE application for a banking client accepts web service requests from frontend and dispatch to other services through Websphere MQ backbone to query information.\n"
+                "description": "This JavaEE application for a banking client accepts web service requests from frontend and dispatch to other services through Websphere MQ backbone to query information."
             }
         ],
         "tags": [
@@ -51,7 +51,7 @@
                     "url": "assets/img/portfolio-item-2-aspnet-tms.png",
                     "title": "Transport Management System screenshot"
                 },
-                "description": "I worked on some modules of this app for an Import/Export company.\nMostly dealing with vehicles maintenance and trips.\n"
+                "description": "I worked on some modules of this app for an Import/Export company.\n\nMostly dealing with vehicles maintenance and trips."
             },
             {
                 "id": "portItem_2_2_paymentRefund",
@@ -60,7 +60,7 @@
                     "url": "assets/img/portfolio-item-2-aspnet-tms.png",
                     "title": "Payment & Refunds System screenshot"
                 },
-                "description": "Node.JS backend of Payment & Refunds web application for financial-related business.\nUsers can generate and send links to end customers for payment via payment gateway service."
+                "description": "Node.JS backend of Payment & Refunds web application for an insurance business.\n\nUsers can generate and send links to end customers for payment via payment gateway service."
             }
         ],
         "tags": [
@@ -85,16 +85,16 @@
                 "id": "portitem_3_1_qpstudio",
                 "title": "QP Studio Website",
                 "image": {
-                    "url": "assets/img/portfolio-item-1-qpweb.png",
+                    "url": "assets/img/portfolio-item-3-1-qpweb.png",
                     "title": "qpstudio.cc website screenshot"
                 },
-                "description": "My little creative studio"
+                "description": "My little creative studio.\n\nThe Website is defined to be as cozy as home. And now with a minigame you can play!"
             },
             {
                 "id": "portItem_3_2_mern_shopping",
                 "title": "MERN Stack Shopping website",
                 "image": {
-                    "url": "assets/img/portfolio-item-3-mern-shopping.png",
+                    "url": "assets/img/portfolio-item-3-2-mern-shopping.png",
                     "title": "MERN stack shopping website screenshot"
                 },
                 "description": "A client's shopping website."
@@ -119,6 +119,7 @@
     {
         "id": "portGroup4",
         "title": "Batches & System Programming",
+        "visible": false,
         "items": [
             {
                 "id": "portItem_4_1_etl",
@@ -127,7 +128,16 @@
                     "url": "assets/img/portfolio-item-3-mern-shopping.png",
                     "title": "ETL Solution screenshot"
                 },
-                "description": "ETL (Extract, Transfer, Load) is for data operations.\nThis solution, consisting of SQL SSIS packages and jobs, is for an international insurance company that needs their data transferred daily and monthly from across countries for local use."
+                "description": "ETL (Extract, Transfer, Load) is for data operations.\n\nThis solution, consisting of SQL SSIS packages and jobs, is for an international insurance company that needs their data transferred daily and monthly from across countries for local use."
+            },
+            {
+                "id": "portItem_4_2_winsvc_demo",
+                "title": "(Demo) Windows Service with Systray UI",
+                "image": {
+                    "url": "assets/img/portfolio-item-3-mern-shopping.png",
+                    "title": "Windows Service demo screenshot"
+                },
+                "description": ""
             }
         ],
         "tags": [
@@ -147,6 +157,15 @@
         "id": "portGroup10",
         "title": "Side Projects & Opensources",
         "items": [
+            {
+                "id": "portItem_10_1_deno_rest2amqp",
+                "title": "REST-to-AMQP API Gateway on Deno",
+                "image": {
+                    "url": "assets/img/portfolio-item-10-1-deno-rest2amqp.png",
+                    "title": "REST-to-AMQP API Gateway on Deno screenshot"
+                },
+                "description": "Used for Microservices architecture, receiving load-balanced REST API requests and dispatch them to backing services through RabbitMQ or other AMQP-based systems\n\nSee: https://github.com/quaos/deno-rest2amqp"
+            }
 
         ],
         "tags": [
@@ -155,8 +174,14 @@
             "nodejs",
             "reactjs",
             "deno",
+            "rest",
+            "amqp",
+            "rabbitmq",
             "chatbot",
-            "line-api"
+            "line-api",
+            "docker",
+            "docker-compose",
+            "devops"
         ]
     }
 ]
