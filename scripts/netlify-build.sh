@@ -12,6 +12,10 @@ deno --version
 npm install --global yarn
 yarn --version
 
+echo "# Finished preparing build environment"
+
+cd ..
+yarn build
+
 set +ex
 
-echo "# Finished preparing build environment"
