@@ -7,7 +7,7 @@
                 "id": "portItem_1_1_as400",
                 "title": "AS/400 Integration Middleware",
                 "image": {
-                    "url": "assets/img/portfolio-item-2-aspnet-tms.png",
+                    "url": "assets/img/portfolio-item-1-1-host-connector.png",
                     "title": "AS400 Integration Middleware screenshot"
                 },
                 "description": "Automated IVR (Interactive Voice Response) solution for a network marketing company's call center.\n\nIt receives customer calls and connects through developed JavaEE middleware to client's AS/400 screen to retrieve data.\n\n"
@@ -16,7 +16,7 @@
                 "id": "portItem_1_2_wmq",
                 "title": "WebSphereMQ Integration Middleware",
                 "image": {
-                    "url": "assets/img/portfolio-item-2-aspnet-tms.png",
+                    "url": "assets/img/portfolio-item-1-2-wmq-connector.png",
                     "title": "WebSphereMQ Integration Middleware screenshot"
                 },
                 "description": "This JavaEE application for a banking client accepts web service requests from frontend and dispatch to other services through Websphere MQ backbone to query information."
@@ -48,7 +48,7 @@
                 "id": "portItem_2_1_enterpriseCms",
                 "title": "Transport Management System on ASP.NET",
                 "image": {
-                    "url": "assets/img/portfolio-item-2-aspnet-tms.png",
+                    "url": "assets/img/portfolio-item-2-1-aspnet-tms.png",
                     "title": "Transport Management System screenshot"
                 },
                 "description": "I worked on some modules of this app for an Import/Export company.\n\nMostly dealing with vehicles maintenance and trips."
@@ -57,7 +57,7 @@
                 "id": "portItem_2_2_paymentRefund",
                 "title": "Payment & Refunds System",
                 "image": {
-                    "url": "assets/img/portfolio-item-2-aspnet-tms.png",
+                    "url": "assets/img/portfolio-item-2-2-payment-refund.png",
                     "title": "Payment & Refunds System screenshot"
                 },
                 "description": "Node.JS backend of Payment & Refunds web application for an insurance business.\n\nUsers can generate and send links to end customers for payment via payment gateway service."
@@ -78,7 +78,7 @@
         ]
     },
     {
-        "id": "portGroup4",
+        "id": "portGroup3",
         "title": "Fullstack Web Development",
         "items": [
             {

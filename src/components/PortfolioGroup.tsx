@@ -11,6 +11,11 @@ interface PortfolioGroupProps {
   data?: PortfolioGroupModel;
   className?: string;
   parentId?: string;
+  onImagePreview: (
+    evt: any,
+    image: ImageModel,
+    item: PortfolioItemModel
+  ) => void;
 }
 
 interface ImageWithOwnerItem extends ImageModel {
@@ -21,6 +26,7 @@ export const PortfolioGroup = ({
   data,
   className,
   parentId,
+  onImagePreview,
 }: React.Props<PortfolioGroupProps>) => {
   const { styles } = useStyles();
   const visible = data.visible ?? true;
@@ -42,6 +48,18 @@ export const PortfolioGroup = ({
     [data.items]
   );
 
+  const itemsMap: Record<string, PortfolioItemModel> = React.useMemo(
+    () =>
+      data.items.reduce(
+        (m: any, item: PortfolioItemModel, _idx: number) => ({
+          ...m,
+          [item.id]: item,
+        }),
+        {}
+      ),
+    [data.items]
+  );
+
   const [highlightedItemIds, setHighlightedItemIds] = React.useState<string[]>(
     []
   );
@@ -53,6 +71,14 @@ export const PortfolioGroup = ({
       return;
     }
     itemAnchorNodesMap[itemID] = element;
+  };
+
+  const handleImagePreview = (evt: any, itemID: string) => {
+    const img = galleryImagesMap[itemID];
+    const item = itemsMap[itemID];
+    if (img) {
+      onImagePreview(evt, img, item);
+    }
   };
 
   const handleImageClick = (evt: any, itemID: string) => {
@@ -107,6 +133,7 @@ export const PortfolioGroup = ({
           <Gallery
             imagesMap={galleryImagesMap}
             highlightedIds={highlightedItemIds}
+            onPreview={handleImagePreview}
             onClick={handleImageClick}
           />
           {data.items.map((item: PortfolioItemModel) => (

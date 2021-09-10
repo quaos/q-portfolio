@@ -4,6 +4,44 @@ section {
 
 /* Custom sized elements */
 
+#mainHeader {
+  position: relative;
+  float: left;
+  clear: both;
+  left: 0;
+  top: 0;
+  width: 100%;
+  text-align: left;
+  background-color: #000000;
+  color: #ffffff;
+  box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.5);
+}
+#mainHeader #webLogo {
+  position: relative;
+  float: left;
+  top: 0;
+  left: 0;
+  bottom: 0;
+}
+#mainHeader .title {
+  position: relative;
+  float: left;
+  padding-left: 0.5em;
+}
+#mainHeader .logo-img {
+  width: 64px;
+  height: 64px;
+}
+#mainHeader .navbar {
+  position: relative;
+  float: right;
+  height: 48px;
+  /*bottom: 0;*/
+}
+#main-header .end {
+  clear: both;
+}
+
 hr {
   max-width: none;
   height: 4em;
@@ -17,6 +55,95 @@ background-attachment: scroll;
 background-repeat: no-repeat;
 background-position: center;
 background-size: 100% 100%;*/
+}
+
+.portfolio-group {
+  background-color: #f0f0f0;
+  padding: 0.5em;
+}
+
+.portfolio-group .portfolio-item {
+  padding: 0.5em;
+  margin-bottom: 1em;
+}
+
+.portfolio-group .portfolio-item.highlighted {
+  background-color: #ffffff;
+  box-shadow: 4px 4px 8px rgba(255, 241, 45, 0.7);
+}
+
+.portfolio-group .portfolio-item h1,
+.portfolio-group .portfolio-item h2,
+.portfolio-group .portfolio-item h3,
+.portfolio-group .portfolio-item h4,
+.portfolio-group .portfolio-item h5,
+.portfolio-group .portfolio-item h6 {
+  text-align: left;
+}
+
+.portfolio-group .portfolio-item .main-content {
+  text-align: left;
+}
+
+.portfolio-group .gallery-images {
+  justify-content: left;
+  margin-bottom: 1em;
+}
+
+.gallery-images {
+  display: flex;
+  flex-direction: row;
+}
+
+.gallery-images .gallery-image-wrapper img {
+  max-width: 200px;
+  max-height: 200px;
+  margin-left: 1em;
+  margin-right: 1em;
+  border: 2px solid rgba(0, 0, 0, 0.5);
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
+  aspect-ratio: initial;
+}
+
+.gallery-images .gallery-image-wrapper .magnifier {
+  display: none;
+  position: relative;
+  bottom: 20%;
+  left: 40%;
+  width: 20%;
+  min-width: 2em;
+  max-width: 4em;
+  height: 1.5em;
+  padding: 2px;
+  background-color: #eee;
+  border: 1px solid #999;
+  border-radius: 1em;
+  text-align: center;
+}
+
+.gallery-images .gallery-image-wrapper.highlighted .magnifier,
+.gallery-images .gallery-image-wrapper:hover .magnifier {
+  display: block;
+}
+
+.gallery-images img.highlighted,
+.gallery-images img:hover {
+  border: 2px solid rgba(255, 241, 45, 0.7);
+}
+
+.tags {
+  display: flex;
+  list-style-type: none;
+}
+
+.tags li {
+  background-color: #c0c0c0;
+  font-size: smaller;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  margin-left: 2px;
+  margin-right: 2px;
+  border-radius: 1em;
 }
 
 .framing-left {
@@ -41,7 +168,7 @@ background-size: 100% 100%;*/
   /* background-color: #fffff0; */
   text-align: center;
   padding: 1em;
-  border-radius: 3em 0 0 0;
+  border-radius: 2em 0 0 0;
 }
 
 .portfolio-item img {
@@ -74,6 +201,15 @@ background-size: 100% 100%;*/
   margin-top: 0.5em;
 }
 
+.image-preview.modal .modal-dialog .modal-content {
+  width: 100%;
+}
+
+.image-preview.modal .modal-dialog .modal-content img.preview {
+  width: 100%;
+  aspect-ratio: initial;
+}
+
 /* Bootstrap hacks */
 
 .carousel-control-prev,
@@ -85,14 +221,14 @@ background-size: 100% 100%;*/
 /* Responsive Devices */
 
 @media screen and (max-width: 600px) {
-    .portfolio-item img {
-        float: left;
-        width: 100%;
-        height: auto;
-    }
+  .portfolio-item img {
+    float: left;
+    width: 100%;
+    height: auto;
+  }
 
-    .portfolio-item .description {
-        float: left;
-        max-width: 100%;
-    }
+  .portfolio-item .description {
+    float: left;
+    max-width: 100%;
+  }
 }
