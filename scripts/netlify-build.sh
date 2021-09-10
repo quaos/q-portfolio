@@ -14,7 +14,6 @@ yarn --version
 
 echo "# Finished preparing build environment"
 
-cd ..
 yarn build
 
 set +ex
