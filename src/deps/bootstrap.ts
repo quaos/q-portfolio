@@ -12,4 +12,4 @@ export {
   Tab,
   Toast,
   Tooltip,
-} from "https://esm.sh/bootstrap@5.1.0";
+} from "https://esm.sh/bootstrap@5.2.3";

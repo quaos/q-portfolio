@@ -5,8 +5,8 @@ import { Image as ImageModel } from "../models/Image.ts";
 export interface GalleryImageProps {
   image: ImageModel;
   highlighted: boolean;
-  onPreview: (evt: any) => void;
-  onClick: (evt: any) => void;
+  onPreview: (evt: React.MouseEvent<HTMLElement>) => void;
+  onClick: (evt: React.MouseEvent<HTMLElement>) => void;
 }
 
 export const GalleryImage = ({

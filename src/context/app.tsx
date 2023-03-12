@@ -17,7 +17,7 @@ export const AppContext = React.createContext<AppContextProps | undefined>();
 
 export interface AppContextProviderProps {
   basePath: string;
-  backendApiUrl: string;
+  backendApiUrl?: string;
   swMessagesDispatcher?: EventEmitter;
 }
 

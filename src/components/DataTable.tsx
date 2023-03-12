@@ -56,7 +56,7 @@ export function DataTable<T>({
     footer,
     elementId,
     className,
-}: React.Props<DataTableProps<T>>) {
+}: DataTableProps<T>) {
     const { styles } = useStyles();
 
     const tableProps = {

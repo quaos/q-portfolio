@@ -1,5 +1,5 @@
 import { React } from "../deps/react.ts";
-import { useRouteMatch } from "../deps/react-router.ts";
+import { useMatch } from "../deps/react-router.ts";
 
 import { Icon } from "./Icon.tsx";
 import { NavLink } from "./NavLink.tsx";
@@ -21,7 +21,7 @@ export const Header = ({
     sidebarVisible,
     dispatchToggleSidebar,
     elementId,
-}: React.Props<HeaderProps>) => {
+}: HeaderProps) => {
     const { styles } = useStyles();
     // const { messagesDispatcher: swMessagesDispatcher } = useServiceWorker();
 
@@ -85,7 +85,7 @@ export const HeaderNavBar = ({
     Component = "nav",
     elementId,
 }: React.Props<HeaderNavbarProps>) => {
-    const match = useRouteMatch();
+    const match = useMatch();
     const linkIdPrefix = elementId || HeaderNavbarLink.name;
 
     return (
@@ -117,7 +117,7 @@ export const HeaderNavbarLink = ({
     link,
     Component = "li",
     elementId,
-}: React.Props<HeaderNavbarLinkProps>) => {
+}: HeaderNavbarLinkProps) => {
     const { styles } =  useStyles();
 
     return (

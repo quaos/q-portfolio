@@ -17,7 +17,7 @@ export const PortfolioList = ({
   groups,
   id,
   className,
-}: React.Props<PortfolioListProps>) => {
+}: PortfolioListProps) => {
   const { styles } = useStyles();
 
   const [previewingImage, setPreviewingImage] = React.useState<
@@ -37,7 +37,7 @@ export const PortfolioList = ({
     setPreviewingItem(item);
   };
 
-  const handleImagePreviewModalClose = (evt: any) => {
+  const handleImagePreviewModalClose = (evt: React.MouseEvent<HTMLElement>) => {
     setPreviewingImage(undefined);
     setPreviewingItem(undefined);
   };

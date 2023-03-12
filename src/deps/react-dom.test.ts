@@ -1,7 +1,6 @@
-import { ReactDOM } from "./react-dom.ts";
-import { assert, assertEquals } from "./std.ts";
+import { createRoot } from "./react-dom.ts";
+import { assertEquals } from "./std.ts";
 
-Deno.test("ReactDOM deps has render function", () => {
-  assert("render" in ReactDOM);
-  assertEquals(typeof ReactDOM.render, "function");
+Deno.test("ReactDOM deps has createRoot function", () => {
+  assertEquals(typeof createRoot, "function");
 });
