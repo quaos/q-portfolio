@@ -9,7 +9,7 @@ interface PortfolioItemProps {
   data: PortfolioItemModel;
   highlighted: boolean;
   setAnchorRef: (element: HTMLAnchorElement) => void;
-  onHover: (evt: any, item: PortfolioItemModel, hoverState: boolean) => void;
+  onHover: (evt: React.MouseEvent<HTMLElement>, item: PortfolioItemModel, hoverState: boolean) => void;
   Component?: string;
   className?: string;
   parentId?: string;
@@ -22,7 +22,7 @@ export const PortfolioItem = ({
   onHover,
   Component = "div",
   className,
-}: React.Props<PortfolioItemProps>) => {
+}: PortfolioItemProps) => {
   const { styles } = useStyles();
   const visible = data.visible ?? true;
 
@@ -41,8 +41,8 @@ export const PortfolioItem = ({
         highlighted ? "highlighted" : ""
       } ${className}`}
       style={styles.portfolioItem}
-      onMouseOver={(evt: any) => onHover(evt, data, true)}
-      onMouseOut={(evt: any) => onHover(evt, data, false)}
+      onMouseOver={(evt: React.MouseEvent<HTMLElement>) => onHover(evt, data, true)}
+      onMouseOut={(evt: React.MouseEvent<HTMLElement>) => onHover(evt, data, false)}
     >
       <h3>
         <a name={`${data.id}_anchor`} ref={setAnchorRef}>

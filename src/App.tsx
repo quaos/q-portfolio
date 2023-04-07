@@ -1,6 +1,6 @@
 import { EventEmitter } from "./deps/events.ts";
 import { React } from "./deps/react.ts";
-import { Router, Link, Route, Switch} from "./deps/react-router.ts";
+import { Router, Link, Route, Routes} from "./deps/react-router.ts";
 
 import { AppContextProvider } from "./context/app.tsx";
 import { StylesContextProvider } from "./context/styles.tsx";
@@ -9,14 +9,14 @@ import { StylesContextProvider } from "./context/styles.tsx";
 import { Footer } from "./components/Footer.tsx";
 import { Header } from "./components/Header.tsx";
 // import { Sidebar } from "./components/Sidebar.tsx";
-import { HomeScreen } from "./screens/home.tsx";
+import { HomePage } from "./pages/home.tsx";
 
 export interface AppProps {
   basePath: string;
   swMessagesDispatcher?: EventEmitter;
 }
 
-export const App = ({ basePath, swMessagesDispatcher }: React.Props<AppProps>) => {
+export const App = ({ basePath, swMessagesDispatcher }: AppProps) => {
   // const basePath = Deno.env.get("REACT_BASE_PATH") ?? "";
 
   const [navLinks, setNavLinks] = React.useState(
@@ -63,11 +63,11 @@ export const App = ({ basePath, swMessagesDispatcher }: React.Props<AppProps>) =
             dispatchToggleSidebar={dispatchToggleSidebar} />
           <div id="mainContainer" className="wrapper main-container">
               {/* <Sidebar elementId="mainSidebar" links={navLinks} visible={sidebarVisible} /> */}
-              <Switch>
-                <Route path="/" exact={true}>
-                  <HomeScreen />
+              <Routes>
+                <Route path="/" exact>
+                  <HomePage />
                 </Route>
-              </Switch>
+              </Routes>
           </div>
           <Footer elementId="mainFooter" />
         </Router>

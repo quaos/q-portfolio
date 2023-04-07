@@ -1,33 +1,33 @@
 import { 
-  CacheUpdatedMessage,
   createCacheUpdatedMessage,
   MessageTypes,
   NotificationMessage,
   ServiceWorkerMessage,
 } from "./messages.ts";
 
-//HACK
+// HACK
+// deno-lint-ignore no-var
 declare var self: ServiceWorkerGlobalScope;
 
-const APP_CACHE_NAME = "test-deno-pwa-1";
+const APP_CACHE_NAME = "quaos-portfolio";
 const APP_CACHE_VERSION = "1";
 const CACHEABLE_URL_PATTERNS = /^(file|http|https):\/\/(.+)$/i;
 
-self.addEventListener('install', (evt: any) => {
+self.addEventListener('install', (evt: ExtendableEvent) => {
   console.log("Hooray, service worker installed!", evt);
   evt.waitUntil(
       cacheAssets()
   );
 });
 
-self.addEventListener('activate', (evt: any) => {
+self.addEventListener('activate', (evt: ExtendableEvent) => {
   evt.waitUntil(
     syncCacheVersion()
       .then(() => self.clients.claim())
   );
 });
 
-self.addEventListener('fetch', (evt: any) => {
+self.addEventListener('fetch', (evt: FetchEvent) => {
   // HACK: Workaround for https://bugs.chromium.org/p/chromium/issues/detail?id=823392
   if (evt.request.cache === 'only-if-cached' && evt.request.mode !== 'same-origin') {
     return;
@@ -38,7 +38,7 @@ self.addEventListener('fetch', (evt: any) => {
   )
 });
 
-self.addEventListener('message', (evt: any) => {
+self.addEventListener('message', (evt: ExtendableMessageEvent) => {
   let knownEvent = false;
   if ("messageType" in evt.data) {
     switch (evt.data.messageType) {
@@ -59,111 +59,116 @@ self.addEventListener('message', (evt: any) => {
   }
 });
 
-self.addEventListener('push', (evt: any) => {
+self.addEventListener('push', async (evt: PushEvent) => {
   console.log("Push notification received:", evt);
-  evt.text().then((text: string) => {
-    const notifMsg = <NotificationMessage> { from: `${evt.source}`, text };
-    return dispatchMessage(self.clients, notifMsg);
-  })
+  const { data, target } = evt
+  const text = await data?.text()
+  const notifMsg = <NotificationMessage> { from: `${target}`, text };
+  return dispatchMessage(self.clients, notifMsg);
 });
 
 function getFullCacheName(): string {
   return `${APP_CACHE_NAME}-v${APP_CACHE_VERSION}`
 }
 
-function syncCacheVersion(): Promise<boolean> {
+async function syncCacheVersion(): Promise<boolean> {
   if (!("caches" in self)) {
-    return Promise.resolve(false);
+    return false;
   }
 
   const currentCacheName = getFullCacheName();
 
-  return self.caches.keys()
-    .then((cacheNames: string[]) => Promise.all(
-      cacheNames
-        .filter((cacheName: string) => (cacheName != currentCacheName))
-        .map((cacheName: string) => caches.delete(cacheName))
-    ))
-    .then(() => true)
+  const cacheNames = await self.caches.keys()
+  await Promise.all(
+    cacheNames
+      .filter((cacheName: string) => (cacheName != currentCacheName))
+      .map((cacheName: string) => caches.delete(cacheName))
+  )
+
+  return true
 }
 
-function cacheAssets(): Promise<boolean> {
+async function cacheAssets(): Promise<boolean> {
   if (!("caches" in self)) {
-    return Promise.resolve(false);
+    return false;
   }
 
   console.log("Precaching app assets");
 
-  return self.caches.open(getFullCacheName())
-    .then((cache: any) => {
-      return cache.addAll([
+  const cache = await self.caches.open(getFullCacheName())
+  
+  try {
+      await cache.addAll([
         '/',
         '/index.html',
         '/favicon.png',
-        '/assets/css/styles.css',
-        '/assets/css/qp-default.css',
         '/assets/css/index.css',
+        '/assets/css/index-print.css',
+        '/assets/css/portfolio.css',
+        '/assets/css/styles.css',
         '/assets/img/loading.gif',
         '/assets/img/splash.png',
       ]);
-    })
-    .then(() => true)
-    .catch((err: Error) => {
+      return true;
+    } catch (err) {
       console.error(err);
-      return false
-    })
+      return false;
+    }
 }
 
-function getResponse(request: Request): Promise<Response> {
-  return tryGetResponseFromCache(request)
-    .then((cachedResponse?: Response) => {
-      let liveResponse = fetch(request)
-        .then((response) => {
-          return saveResponseToCache(request, response.clone())
-            .then((success) => {
-              (success) && dispatchCacheUpdated(self.clients, request, response.clone());
-              return response
-            })
-        });
+async function getResponse(request: Request): Promise<Response> {
+  const cachedResponse = await tryGetResponseFromCache(request);
+  const liveResponse = await fetch(request);
+  saveResponseToCache(request, liveResponse.clone())
+      .then((success) => {
+        success && dispatchCacheUpdated(self.clients, request, liveResponse.clone());
+        return liveResponse
+      })
 
-      return cachedResponse || liveResponse;
-    })
+  return cachedResponse || liveResponse;
 }
 
-function tryGetResponseFromCache(request: Request): Promise<Response | undefined> {
+async function tryGetResponseFromCache(request: Request): Promise<Response | undefined> {
   if (!("caches" in self)) {
-    return Promise.resolve(undefined);
+    return undefined;
   }
 
-  return self.caches.open(getFullCacheName())
-    .then((cache: any) => cache.match(request))
+  const cache = await self.caches.open(getFullCacheName());
+
+  return cache.match(request);
 }
 
-function saveResponseToCache(request: Request, response: Response): Promise<boolean> {
+async function saveResponseToCache(request: Request, response: Response): Promise<boolean> {
   if (!("caches" in self)) {
-    return Promise.resolve(false);
+    return false;
   }
   if (!CACHEABLE_URL_PATTERNS.test(request.url)) {
-    return Promise.resolve(false);
+    return false;
   }
 
   console.log("Saving response to cache:", response);
 
-  return self.caches.open(getFullCacheName())
-    .then((cache: any) => cache.put(request, response))
-    .then(() => true)
+  try {
+    const cache = await self.caches.open(getFullCacheName());
+    await cache.put(request, response);
+
+    return true;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
 }
 
-function dispatchCacheUpdated(clients: any, request: Request, response: Response): Promise<Response> {
-  return createCacheUpdatedMessage(getFullCacheName(), request, response)
-    .then((msg) => dispatchMessage(clients, msg))
-    .then(() => response)
+async function dispatchCacheUpdated(clients: Clients, request: Request, response: Response): Promise<Response> {
+  const msg = await createCacheUpdatedMessage(getFullCacheName(), request, response);
+  await dispatchMessage(clients, msg);
+  
+  return response;
 }
 
-function dispatchMessage(clients: any, msg: ServiceWorkerMessage): Promise<boolean> {
-  return clients.matchAll()
-    .then((matchedClients: any[]) => {
-      matchedClients.forEach((client: any) => client.postMessage(msg));
-      return true
-    })
+async function dispatchMessage(clients: Clients, msg: ServiceWorkerMessage): Promise<boolean> {
+  const matchedClients = await clients.matchAll();
+  matchedClients.forEach((client) => client.postMessage(msg));
+
+  return true;
 }

@@ -7,7 +7,7 @@ export interface FooterProps {
     elementId?: string;
 }
 
-export const Footer = ({ elementId }: React.Props<FooterProps>) => {
+export const Footer = ({ elementId }: FooterProps) => {
     const { styles } =  useStyles();
 
     return (

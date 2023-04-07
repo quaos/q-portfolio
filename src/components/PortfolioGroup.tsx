@@ -27,37 +27,37 @@ export const PortfolioGroup = ({
   className,
   parentId,
   onImagePreview,
-}: React.Props<PortfolioGroupProps>) => {
+}: PortfolioGroupProps) => {
   const { styles } = useStyles();
-  const visible = data.visible ?? true;
+  const visible = data?.visible ?? true;
 
   // const [galleryImages, setGalleryImages] = React.useState<ImageWithOwnerItem[]>([]);
   // React.useEffect(() => {
   //     setGalleryImages(data.items.flatMap((item: PortfolioItemModel) => ({ ...item.image, itemId: item.id })));
   // }, [data.items]);
 
-  const galleryImagesMap: Record<string, ImageWithOwnerItem> = React.useMemo(
-    () =>
-      data.items.reduce(
-        (m: any, item: PortfolioItemModel, _idx: number) => ({
-          ...m,
-          [item.id]: item.image,
-        }),
-        {}
-      ),
-    [data.items]
-  );
-
   const itemsMap: Record<string, PortfolioItemModel> = React.useMemo(
     () =>
-      data.items.reduce(
-        (m: any, item: PortfolioItemModel, _idx: number) => ({
+    (data?.items ?? []).reduce(
+      (m, item) => ({
           ...m,
           [item.id]: item,
         }),
         {}
       ),
-    [data.items]
+    [data?.items]
+  );
+
+  const galleryImagesMap: Record<string, ImageWithOwnerItem> = React.useMemo(
+    () =>
+      Object.entries(itemsMap).reduce(
+        (m, [key, item]) => ({
+          ...m,
+          [key]: item.image,
+        }),
+        {}
+      ),
+    [itemsMap]
   );
 
   const [highlightedItemIds, setHighlightedItemIds] = React.useState<string[]>(
@@ -73,7 +73,7 @@ export const PortfolioGroup = ({
     itemAnchorNodesMap[itemID] = element;
   };
 
-  const handleImagePreview = (evt: any, itemID: string) => {
+  const handleImagePreview = (evt: React.MouseEvent<HTMLElement>, itemID: string) => {
     const img = galleryImagesMap[itemID];
     const item = itemsMap[itemID];
     if (img) {
@@ -81,7 +81,7 @@ export const PortfolioGroup = ({
     }
   };
 
-  const handleImageClick = (evt: any, itemID: string) => {
+  const handleImageClick = (evt: React.MouseEvent<HTMLElement>, itemID: string) => {
     setHighlightedItemIds([itemID]);
     const itemAnchorNode = itemAnchorNodesMap[itemID];
     if (itemAnchorNode) {
@@ -91,7 +91,7 @@ export const PortfolioGroup = ({
   };
 
   const handleItemHover = (
-    evt: any,
+    evt: React.MouseEvent<HTMLElement>,
     item: PortfolioItemModel,
     hoverState: boolean
   ) => {
@@ -111,7 +111,7 @@ export const PortfolioGroup = ({
       className="accordion-item portfolio-group"
       style={styles.portfolioGroup}
     >
-      <h2 id={`${data.id}_head`} className="accordion-header">
+      <h2 {...(data && { id: `${data.id}_head`})} className="accordion-header">
         <button
           className="accordion-button"
           type="button"
@@ -120,13 +120,13 @@ export const PortfolioGroup = ({
           aria-expanded="true"
           aria-controls="collapse1"
         >
-          {data.title}
+          {data?.title}
         </button>
       </h2>
       <div
         id="collapse1"
         className="accordion-collapse collapse portfolio-group show"
-        aria-labelledby={`${data.id}_head`}
+        {...(data && { "aria-labelledby": `${data?.id}_head` })}
         data-bs-parent={`#${parentId}`}
       >
         <div className="accordion-body">
@@ -136,7 +136,7 @@ export const PortfolioGroup = ({
             onPreview={handleImagePreview}
             onClick={handleImageClick}
           />
-          {data.items.map((item: PortfolioItemModel) => (
+          {data?.items?.map((item: PortfolioItemModel) => (
             <PortfolioItem
               key={item.id}
               data={item}
@@ -148,7 +148,7 @@ export const PortfolioGroup = ({
             />
           ))}
           <ul className="tags">
-            {data.tags.map((tag: string) => (
+            {data?.tags?.map((tag: string) => (
               <li key={tag}>{tag}</li>
             ))}
           </ul>

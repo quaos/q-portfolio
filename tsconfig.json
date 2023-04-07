@@ -9,7 +9,7 @@
     "checkJs": false,
     "jsx": "react",
     "jsxFactory": "React.createElement",
-    "lib": ["deno.ns", "DOM", "ESNext"],
+    "lib": ["deno.ns", "dom", "esnext"],
     "noFallthroughCasesInSwitch": false,
     "noImplicitAny": true,
     "noImplicitReturns": false,

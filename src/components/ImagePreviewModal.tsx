@@ -7,7 +7,7 @@ export interface ImagePreviewModalProps {
   image: ImageModel;
   title: string;
   description: string;
-  onClose: (evt: any) => void;
+  onClose: (evt: React.MouseEvent<HTMLElement>) => void;
   elementId?: string;
 }
 
@@ -18,7 +18,7 @@ export const ImagePreviewModal = ({
   onClose,
   elementId,
 }: React.Props<ImagePreviewModalProps>) => {
-  let bsModalRef: any | undefined = undefined;
+  let bsModalRef: bootstrap.Modal | undefined;
 
   const handleModalRefChange = (element: HTMLElement) => {
     if (element) {
@@ -32,7 +32,7 @@ export const ImagePreviewModal = ({
     }
   };
 
-  const handleModalClosing = (evt: any) => {
+  const handleModalClosing = (evt: React.MouseEvent<HTMLElement>) => {
     if (bsModalRef) {
       bsModalRef.hide();
     }

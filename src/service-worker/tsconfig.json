@@ -6,7 +6,7 @@
     "allowUnusedLabels": false,
     "alwaysStrict": true,
     "checkJs": false,
-    "lib": ["ESNext","WebWorker"],
+    "lib": ["esnext","webworker"],
     "noFallthroughCasesInSwitch": false,
     "noImplicitAny": true,
     "noImplicitReturns": true,

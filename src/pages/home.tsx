@@ -8,10 +8,9 @@ import { PortfolioList } from "../components/PortfolioList.tsx";
 // import { Icon } from "../components/Icon.tsx";
 import { PortfolioGroup as PortfolioGroupModel } from "../models/PortfolioGroup.ts";
 
-export interface HomeScreenProps {
-}
+export interface HomePageProps {}
 
-export const HomeScreen = ({ }: React.Props<HomeScreenProps>) => {
+export const HomePage = ({ }: HomePageProps) => {
   return (
     <ContentView elementId="mainPortfolio" className="row">
       <div id="myPersonalInfo">
@@ -23,10 +22,9 @@ export const HomeScreen = ({ }: React.Props<HomeScreenProps>) => {
   )
 };
 
-interface PortfolioSectionProps {
-}
+interface PortfolioSectionProps {}
 
-const PortfolioSection = ({ }: React.Props<PortfolioSectionProps>) => {
+const PortfolioSection = ({ }: PortfolioSectionProps) => {
   const {loading, portfolioGroups } = usePortfolio();
 
   if (loading) {

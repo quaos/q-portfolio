@@ -1,5 +1,5 @@
 import { React } from "../deps/react.ts";
-import { useHistory, useRouteMatch } from "../deps/react-router.ts";
+import { useNavigate, useMatch } from "../deps/react-router.ts";
 
 import { useStyles } from "../context/styles.tsx";
 
@@ -23,11 +23,11 @@ export const NavLink = ({
     children,
 }: React.PropsWithChildren<NavLinkProps>) => {
     const { styles } =  useStyles();
-    const history = useHistory();
-    const routeMatch = useRouteMatch({ path: to, strict: exact });
+    const history = useNavigate();
+    const routeMatch = useMatch({ path: to, strict: exact });
     const active = (routeMatch) && (!exact || routeMatch.exact);
 
-    const onClick = (evt: any) => {
+    const onClick = (evt: React.MouseEvent<HTMLElement>) => {
         console.log(`NavLink: Navigating to:`, to);
         history.push(to);
         evt.preventDefault();

@@ -1,20 +1,26 @@
 import * as abc from "./deps/abc.ts";
+import type { Server } from "./deps/std.ts";
 
 export interface RunServerOptions {
   host?: string;
   port?: number;
 }
 
-export async function runServer(opts?: RunServerOptions): Promise<number> {
+export interface RunServerResult {
+  process: Promise<void>
+  server: Server
+}
+
+export async function runServer(opts?: RunServerOptions): Promise<RunServerResult> {
   try {
     const sourceDir = "./public";
-    const host = opts?.host || "localhost";
+    const hostname = opts?.host || "localhost";
     const port = opts?.port || 8080;
 
     abc.MIME.DB[".css"] = "text/css";
 
     console.log(
-      `Starting static web server at: http://${host}:${port}/\nSource path: ${sourceDir}`,
+      `Starting static web server at: http://${hostname}:${port}/\nSource path: ${sourceDir}`,
     );
     const abcApp = new abc.Application();
     abcApp
@@ -38,8 +44,19 @@ export async function runServer(opts?: RunServerOptions): Promise<number> {
       .file("/store", `${sourceDir}/index.html`)
       .file("/store/:id", `${sourceDir}/index.html`)
       .file("/about", `${sourceDir}/index.html`)
-      .start({ port });
-    return 0;
+      .start({ hostname, port });
+
+    // HACK: Revise this later
+    return await new Promise(resolve => {
+      const waitStartIntervalId = setInterval(() => {
+        if (abcApp.θprocess != null) {
+          console.log("Server is started.");
+          clearInterval(waitStartIntervalId);
+          resolve({ process: abcApp.θprocess })
+          abcApp.server
+        }
+      }, 1000)  
+    });
   } catch (err) {
     console.error(err);
     throw err;
