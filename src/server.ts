@@ -1,5 +1,5 @@
 import * as abc from "./deps/abc.ts";
-import type { Server } from "./deps/std.ts";
+import { HttpServer } from "./deps/std.ts";
 
 export interface RunServerOptions {
   host?: string;
@@ -8,7 +8,7 @@ export interface RunServerOptions {
 
 export interface RunServerResult {
   process: Promise<void>
-  server: Server
+  server?: HttpServer
 }
 
 export async function runServer(opts?: RunServerOptions): Promise<RunServerResult> {
@@ -53,9 +53,8 @@ export async function runServer(opts?: RunServerOptions): Promise<RunServerResul
           console.log("Server is started.");
           clearInterval(waitStartIntervalId);
           resolve({ process: abcApp.θprocess })
-          abcApp.server
         }
-      }, 1000)  
+      }, 1000)
     });
   } catch (err) {
     console.error(err);

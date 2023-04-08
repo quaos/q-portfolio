@@ -1,6 +1,6 @@
 import { EventEmitter } from "./deps/events.ts";
-import { React } from "./deps/react.ts";
-import { Router, Link, Route, Routes} from "./deps/react-router.ts";
+import React from "./deps/react.ts";
+import { Link, Route, Router, Routes } from "./deps/react-router.ts";
 
 import { AppContextProvider } from "./context/app.tsx";
 import { StylesContextProvider } from "./context/styles.tsx";
@@ -20,10 +20,10 @@ export const App = ({ basePath, swMessagesDispatcher }: AppProps) => {
   // const basePath = Deno.env.get("REACT_BASE_PATH") ?? "";
 
   const [navLinks, setNavLinks] = React.useState(
-    []
+    [],
   );
   const [initState, setInitState] = React.useState(
-    false
+    false,
   );
 
   React.useEffect(() => {
@@ -35,39 +35,44 @@ export const App = ({ basePath, swMessagesDispatcher }: AppProps) => {
         url: "/",
         usingExactMatch: true,
         iconSet: "qp",
-        iconName: "planet"
+        iconName: "planet",
       },
     ]);
     setInitState(true);
 
     return () => {
       // Cleanup app context
-    }
+    };
   }, [initState]);
-  
+
   const [sidebarVisible, setSidebarVisible] = React.useState(true);
   const dispatchToggleSidebar = (evt: Event) => {
     evt.preventDefault();
     setSidebarVisible(!sidebarVisible);
 
-    return false
-  }
+    return false;
+  };
 
   return (
-    <AppContextProvider basePath={basePath} swMessagesDispatcher={swMessagesDispatcher}>
+    <AppContextProvider
+      basePath={basePath}
+      swMessagesDispatcher={swMessagesDispatcher}
+    >
       <StylesContextProvider>
         <Router>
-          <Header elementId="mainHeader"
+          <Header
+            elementId="mainHeader"
             links={navLinks}
             sidebarVisible={sidebarVisible}
-            dispatchToggleSidebar={dispatchToggleSidebar} />
+            dispatchToggleSidebar={dispatchToggleSidebar}
+          />
           <div id="mainContainer" className="wrapper main-container">
-              {/* <Sidebar elementId="mainSidebar" links={navLinks} visible={sidebarVisible} /> */}
-              <Routes>
-                <Route path="/" exact>
-                  <HomePage />
-                </Route>
-              </Routes>
+            {/* <Sidebar elementId="mainSidebar" links={navLinks} visible={sidebarVisible} /> */}
+            <Routes>
+              <Route path="/" exact>
+                <HomePage />
+              </Route>
+            </Routes>
           </div>
           <Footer elementId="mainFooter" />
         </Router>

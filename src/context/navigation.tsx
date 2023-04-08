@@ -1,42 +1,57 @@
-import { React } from "../deps/react.ts";
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useState,
+} from "../deps/react.ts";
 
-import { NavLink } from "../../../common/src/models/NavLink.ts";
+import { NavLink } from "../models/NavLink.ts";
 
 export interface NavigationContextProps {
-    navLinks: NavLink[];
-    currentLink: NavLink;
-    dispatchNavigateTo: (target: NavLink, evt: any) => void;
+  navLinks: NavLink[];
+  currentLink?: NavLink;
+  goto: (target: NavLink, evt: React.SyntheticEvent) => void;
 }
 
-export const NavigationContext = React.createContext<NavigationContextProps | undefined>(
-    undefined,
-);
+export const NavigationContext = createContext<
+  NavigationContextProps | undefined
+>(undefined);
 
 export interface NavigationContextProviderProps {
-    children: React.ReactNode;
-    navLinks: NavLink[];
+  navLinks: NavLink[];
 }
 
-export const NavigationContextProvider: React.FC = ({ children, navLinks }: NavigationContextProviderProps) => {
-    const [currentLink, setCurrentLink] = React.useState<NavLink | undefined>(undefined);
+export const NavigationContextProvider = (
+  { children, navLinks }: React.PropsWithChildren<
+    NavigationContextProviderProps
+  >,
+) => {
+  const [currentLink, setCurrentLink] = useState<NavLink | undefined>(
+    undefined,
+  );
 
-    const dispatchNavigateTo = (target: NavLink, evt: any) => {
-        console.log("Navigating to:", target);
-        setCurrentLink(target);
-    }
+  const handleGoto = useCallback(
+    (target: NavLink, evt: React.SyntheticEvent) => {
+      console.log("Navigating to:", target);
+      setCurrentLink(target);
+    },
+    [],
+  );
 
-    return (
-        <NavigationContext.Provider value={{ navLinks, currentLink, dispatchNavigateTo }}>
-            {children}
-        </NavigationContext.Provider>
-    );
+  return (
+    <NavigationContext.Provider
+      value={{ navLinks, currentLink, goto: handleGoto }}
+    >
+      {children}
+    </NavigationContext.Provider>
+  );
 };
 
 export function useNavigation(): NavigationContextProps {
-    const context = React.useContext(NavigationContext);
-    if (context === undefined) {
-        throw new Error("No NavigationContext Provider available");
-    }
+  const context = useContext(NavigationContext);
+  if (context === undefined) {
+    throw new Error("No NavigationContext Provider available");
+  }
 
-    return context;
+  return context;
 }

@@ -1,5 +1,5 @@
 declare global {
-    var navigator: any;
+    var navigator: Navigator;
 }
 
 export {};

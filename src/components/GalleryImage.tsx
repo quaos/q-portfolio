@@ -1,4 +1,4 @@
-import { React } from "../deps/react.ts";
+import React from "../deps/react.ts";
 
 import { Image as ImageModel } from "../models/Image.ts";
 

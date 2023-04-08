@@ -1,4 +1,4 @@
-import { React } from "../deps/react.ts";
+import React from "../deps/react.ts";
 
 import { ContentView } from "./ContentView.tsx";
 import { useStyles } from "../context/styles.tsx";
@@ -9,7 +9,11 @@ interface PortfolioItemProps {
   data: PortfolioItemModel;
   highlighted: boolean;
   setAnchorRef: (element: HTMLAnchorElement) => void;
-  onHover: (evt: React.MouseEvent<HTMLElement>, item: PortfolioItemModel, hoverState: boolean) => void;
+  onHover: (
+    evt: React.MouseEvent<HTMLElement>,
+    item: PortfolioItemModel,
+    hoverState: boolean,
+  ) => void;
   Component?: string;
   className?: string;
   parentId?: string;
@@ -41,8 +45,10 @@ export const PortfolioItem = ({
         highlighted ? "highlighted" : ""
       } ${className}`}
       style={styles.portfolioItem}
-      onMouseOver={(evt: React.MouseEvent<HTMLElement>) => onHover(evt, data, true)}
-      onMouseOut={(evt: React.MouseEvent<HTMLElement>) => onHover(evt, data, false)}
+      onMouseOver={(evt: React.MouseEvent<HTMLElement>) =>
+        onHover(evt, data, true)}
+      onMouseOut={(evt: React.MouseEvent<HTMLElement>) =>
+        onHover(evt, data, false)}
     >
       <h3>
         <a name={`${data.id}_anchor`} ref={setAnchorRef}>
@@ -50,9 +56,11 @@ export const PortfolioItem = ({
         </a>
       </h3>
       <ContentView markdownContent={data.description} />
-      {/* {descLines.map((line, idx) => (
+      {
+        /* {descLines.map((line, idx) => (
         <p key={`line_${idx + 1}`}>{line}</p>
-      ))} */}
+      ))} */
+      }
     </Component>
   );
 };

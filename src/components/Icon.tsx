@@ -1,4 +1,4 @@
-import { React } from "../deps/react.ts";
+import React from "../deps/react.ts";
 
 export enum IconSize {
   XS = "xs",
@@ -17,24 +17,24 @@ export interface IconProps {
 }
 
 export const Icon = ({
-  iconSet, iconName, size,
+  iconSet,
+  iconName,
+  size,
   Component = "i",
   className,
 }: React.Props<IconProps>) => {
   let iconCls;
   switch (iconSet) {
-      case "qp":
-          iconCls = `qp-icon qp-icon-${size} qp-pic-${iconName}`;
-          break;
-      case "fa":
-          iconCls = `fa fa-${iconName}`;
-          break;
-      default:
-          iconCls = "";
-          break;
+    case "qp":
+      iconCls = `qp-icon qp-icon-${size} qp-pic-${iconName}`;
+      break;
+    case "fa":
+      iconCls = `fa fa-${iconName}`;
+      break;
+    default:
+      iconCls = "";
+      break;
   }
 
-  return (
-    <Component className={`${className} ${iconCls}`}></Component>
-  )
+  return <Component className={`${className} ${iconCls}`}></Component>;
 };

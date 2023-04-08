@@ -1,4 +1,4 @@
-import { React } from "../deps/react.ts";
+import React from "../deps/react.ts";
 
 import { ImagePreviewModal } from "./ImagePreviewModal.tsx";
 import { PortfolioGroup } from "./PortfolioGroup.tsx";
@@ -8,12 +8,14 @@ import { PortfolioItem as PortfolioItemModel } from "../models/PortfolioItem.ts"
 import { Image as ImageModel } from "../models/Image.ts";
 
 interface PortfolioListProps {
+  error?: Error;
   groups: PortfolioGroupModel[];
   id?: string;
   className?: string;
 }
 
 export const PortfolioList = ({
+  error,
   groups,
   id,
   className,
@@ -31,7 +33,7 @@ export const PortfolioList = ({
   const handleImagePreview = (
     evt: any,
     img: ImageModel,
-    item: PortfolioItemModel
+    item: PortfolioItemModel,
   ) => {
     setPreviewingImage(img);
     setPreviewingItem(item);
@@ -48,6 +50,7 @@ export const PortfolioList = ({
       className={`accordion portfolio-list ${className}`}
       style={styles.portfolioList}
     >
+      {error && <p className="error">{error.message}</p>}
       {groups.map((group: PortfolioGroupModel) => (
         <PortfolioGroup
           key={group.id}

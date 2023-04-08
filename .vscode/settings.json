@@ -2,6 +2,7 @@
     "deno.config": "./tsconfig.json",
     "deno.enable": true,
     "deno.unstable": true,
+    "deno.lint": true,
     "deno.suggest.imports.hosts": {
         "https://esm.sh": true,
         "https://deno.land": true,

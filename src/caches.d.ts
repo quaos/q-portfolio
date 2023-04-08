@@ -1,5 +1,5 @@
 declare global {
-    var caches: any;
+    var caches: CacheStorage;
 }
 
 export {};
