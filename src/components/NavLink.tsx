@@ -1,13 +1,15 @@
-import React from "../deps/react.ts";
-import { useMatch, useNavigate } from "../deps/react-router.ts";
+import React, { DynamicComponent } from "../deps/react.ts";
+import { useLocation, useMatch, useNavigate } from "../deps/react-router.ts";
 
 import { useStyles } from "../context/styles.tsx";
 
 export interface NavLinkProps {
-  to: string;
+  Component?: DynamicComponent;
+  className?: string;
   exact: boolean;
-  Component?: string;
-  elementId?: string;
+  id?: string;
+  style?: React.CSSProperties;
+  to: string;
 }
 
 /**
@@ -15,21 +17,22 @@ export interface NavLinkProps {
  * @param props
  */
 export const NavLink = ({
-  to,
-  exact,
-  Component = "div",
-  elementId,
-  className,
   children,
+  className = "",
+  Component = "div",
+  exact,
+  id,
+  style,
+  to,
 }: React.PropsWithChildren<NavLinkProps>) => {
   const { styles } = useStyles();
-  const history = useNavigate();
-  const routeMatch = useMatch({ path: to, strict: exact });
-  const active = (routeMatch) && (!exact || routeMatch.exact);
+  const navigateTo = useNavigate();
+  const routeMatch = useMatch({ path: to, end: exact });
+  const active = (routeMatch) && (!exact || routeMatch.pathname === to);
 
-  const onClick = (evt: React.MouseEvent<HTMLElement>) => {
+  const handleClick = (evt: React.MouseEvent<HTMLElement>) => {
     console.log(`NavLink: Navigating to:`, to);
-    history.push(to);
+    navigateTo(to);
     evt.preventDefault();
 
     return false;
@@ -37,11 +40,11 @@ export const NavLink = ({
 
   return (
     <Component
-      id={elementId}
+      id={id}
       className={`nav-link ${(active) ? "active" : ""} ${className}`}
-      style={styles.NavLink}
+      style={{ ...styles.NavLink, ...style }}
     >
-      <a href={to} onClick={onClick}>
+      <a href={to} onClick={handleClick}>
         {children}
       </a>
     </Component>

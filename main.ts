@@ -42,7 +42,7 @@ const commandsMap: Record<string, Command> = [
       }
 
       await Promise.race([serverProcess, processExitingProm]);
-      if (!httpServer.closed) {
+      if (httpServer != null && !httpServer.closed) {
         httpServer.close();
       }
 

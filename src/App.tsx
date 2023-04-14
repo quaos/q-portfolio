@@ -1,15 +1,14 @@
 import { EventEmitter } from "./deps/events.ts";
-import React from "./deps/react.ts";
+import React, { useState } from "./deps/react.ts";
 import { Link, Route, Router, Routes } from "./deps/react-router.ts";
 
 import { AppContextProvider } from "./context/app.tsx";
 import { StylesContextProvider } from "./context/styles.tsx";
 // import { NavigationContextProvider } from "../context/navigation.tsx";
-// import { ContentView } from "./ContentView.tsx";
-import { Footer } from "./components/Footer.tsx";
-import { Header } from "./components/Header.tsx";
-// import { Sidebar } from "./components/Sidebar.tsx";
-import { HomePage } from "./pages/home.tsx";
+// import { ContentView } from "./components/ContentView.tsx";
+// import { Sidebar } from "./components/layout/Sidebar.tsx";
+import { MainLayout } from "./components/layout/MainLayout.tsx";
+import { NavLink as NavLinkModel } from "./models/NavLink.ts";
 
 export interface AppProps {
   basePath: string;
@@ -19,12 +18,20 @@ export interface AppProps {
 export const App = ({ basePath, swMessagesDispatcher }: AppProps) => {
   // const basePath = Deno.env.get("REACT_BASE_PATH") ?? "";
 
-  const [navLinks, setNavLinks] = React.useState(
+  const [navLinks, setNavLinks] = useState<NavLinkModel[]>(
     [],
   );
-  const [initState, setInitState] = React.useState(
+  const [isSidebarVisible, setIsSidebarVisible] = useState(true);
+  const [_isInitialized, setIsInitialized] = useState(
     false,
   );
+
+  const handleToggleSidebar = (evt: React.SyntheticEvent) => {
+    evt.preventDefault();
+    setIsSidebarVisible(!isSidebarVisible);
+
+    return false;
+  };
 
   React.useEffect(() => {
     // TODO: Initialize app context with real data
@@ -38,20 +45,12 @@ export const App = ({ basePath, swMessagesDispatcher }: AppProps) => {
         iconName: "planet",
       },
     ]);
-    setInitState(true);
+    setIsInitialized(true);
 
     return () => {
       // Cleanup app context
     };
-  }, [initState]);
-
-  const [sidebarVisible, setSidebarVisible] = React.useState(true);
-  const dispatchToggleSidebar = (evt: Event) => {
-    evt.preventDefault();
-    setSidebarVisible(!sidebarVisible);
-
-    return false;
-  };
+  }, []);
 
   return (
     <AppContextProvider
@@ -60,21 +59,12 @@ export const App = ({ basePath, swMessagesDispatcher }: AppProps) => {
     >
       <StylesContextProvider>
         <Router>
-          <Header
-            elementId="mainHeader"
-            links={navLinks}
-            sidebarVisible={sidebarVisible}
-            dispatchToggleSidebar={dispatchToggleSidebar}
+          <MainLayout
+            id="mainLayout"
+            navLinks={navLinks}
+            isSidebarVisible={isSidebarVisible}
+            toggleSidebar={handleToggleSidebar}
           />
-          <div id="mainContainer" className="wrapper main-container">
-            {/* <Sidebar elementId="mainSidebar" links={navLinks} visible={sidebarVisible} /> */}
-            <Routes>
-              <Route path="/" exact>
-                <HomePage />
-              </Route>
-            </Routes>
-          </div>
-          <Footer elementId="mainFooter" />
         </Router>
       </StylesContextProvider>
     </AppContextProvider>

@@ -9,40 +9,46 @@ import {
 import { ExternalLink } from "./ExternalLink.tsx";
 import { Icon } from "./Icon.tsx";
 export interface ContentViewProps {
-  Component?: DynamicComponent;
-  title?: string;
-  htmlContent?: string;
-  markdownContent?: string;
-  currentHostname?: string;
-  elementId?: string;
   className?: string;
+  Component?: DynamicComponent;
+  currentHostname?: string;
+  htmlContent?: string;
+  id?: string;
+  markdownContent?: string;
+  title?: string;
 }
 
 export const ContentView = ({
-  title,
-  htmlContent,
-  markdownContent,
-  currentHostname,
-  Component = "article",
-  elementId,
-  className,
   children,
+  className,
+  Component = "article",
+  currentHostname,
+  htmlContent,
+  id,
+  markdownContent,
+  title,
 }: React.PropsWithChildren<ContentViewProps>) => {
-  let [errors, setErrors] = useState<Error[]>([]);
+  const [errors, setErrors] = useState<Error[]>([]);
+
+  const collectError = (err: Error) => {
+    setErrors([...errors, err]);
+  };
 
   const HtmlRenderer = useMemo(() => {
-    const _transformer = new Transformer({
+    const transformer = new Transformer({
       maxDepth: 20,
     });
 
-    _transformer.on(TransformerEvent.Errors, (ctx: TransformerContext) => {
-      ctx.errors.forEach(console.error);
-      setErrors(ctx.errors);
-    });
-    _transformer.on(TransformerEvent.Element, (ctx: TransformerContext) => {
+    // transformer.on(TransformerEvent.Error, (ctx: TransformerContext) => {
+    //   ctx.errors.forEach(console.error);
+    //   setErrors(ctx.errors);
+    // });
+    transformer.on(TransformerEvent.Element, (ctx: TransformerContext) => {
       if (ctx.component === "a") {
-        let { href } = ctx.props;
-        const targetUrl = new URL(href);
+        const { href } = ctx.props as React.AnchorHTMLAttributes<
+          HTMLAnchorElement
+        >;
+        const targetUrl = new URL(href || "#");
         const isExternal = (!currentHostname) ||
           (targetUrl.host !== currentHostname);
         if (isExternal) {
@@ -51,18 +57,16 @@ export const ContentView = ({
       }
     });
 
-    return _transformer.getComponent(React);
+    return transformer.getComponent(React);
   }, []);
 
-  if (
-    (!htmlContent) &&
-    (markdownContent)
-  ) {
-    htmlContent = Marked.parse(markdownContent).content;
-  }
+  const renderedHtmlContent = useMemo(() =>
+    htmlContent || (
+      markdownContent ? Marked.parse(markdownContent).content : undefined
+    ), [htmlContent, markdownContent]);
 
   return (
-    <Component id={elementId} className={`main-content ${className}`}>
+    <Component id={id} className={`main-content ${className}`}>
       {(title) ? <h2>{title}</h2> : null}
       {((errors) && (errors.length >= 1))
         ? (
@@ -71,7 +75,9 @@ export const ContentView = ({
           </div>
         )
         : null}
-      {(htmlContent) ? <HtmlRenderer source={htmlContent} /> : children}
+      {renderedHtmlContent
+        ? <HtmlRenderer source={renderedHtmlContent} onError={collectError} />
+        : children}
       {
         /* {(htmlContent)
                 ? <div dangerouslySetInnerHTML={{ __html: htmlContent }}></div>

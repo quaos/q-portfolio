@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "allowJs": false,
+        "checkJs": false,
+        "isolatedModules": true,
+        "jsx": "react",
+        "jsxFactory": "React.createElement",
+        "lib": [
+            "deno.ns",
+            "dom",
+            "dom.iterable",
+            "esnext"
+        ],
+        "moduleResolution": "nodenext",
+        "sourceMap": true,
+        "strict": true
+    }
+}

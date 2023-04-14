@@ -12,16 +12,16 @@
     "github": "https://github.com/quaos/q-portfolio"
   },
   "scripts": {
+    "deno:cache": "deno cache src/deps/*.ts",
     "lint": "deno lint --unstable src/client.tsx",
     "test": "deno test",
-    "build": "deno bundle --config tsconfig.json src/client.tsx public/assets/js/client.bundle.js",
-    "__build_with_sw": "deno bundle --config tsconfig.json src/client.tsx public/assets/js/client.bundle.js && deno bundle --config src/service-worker/tsconfig.json src/service-worker/service-worker.ts public/assets/js/service-worker.js",
+    "build": "deno bundle src/client.tsx public/assets/js/client.bundle.js",
+    "__build_with_sw": "deno bundle src/client.tsx public/assets/js/client.bundle.js && deno bundle --config src/service-worker/tsconfig.json src/service-worker/service-worker.ts public/assets/js/service-worker.js",
     "build-sw": "deno bundle --config src/service-worker/tsconfig.json src/service-worker/service-worker.ts public/assets/js/service-worker.js",
     "start": "deno run --allow-env --allow-net --allow-read --allow-run main.ts --browse serve",
     "debug": "deno run --allow-env --allow-net --allow-read --allow-run --watch main.ts --browse serve",
     "_debug_denon": "denon start",
-    "heroku-postbuild": "deno bundle --config tsconfig.json src/client.tsx public/assets/js/client.bundle.js",
-    "deno:cache": "deno cache src/deps/*.ts"
+    "heroku-postbuild": "deno bundle src/client.tsx public/assets/js/client.bundle.js"
   },
   "dependencies": {},
   "devDependencies": {

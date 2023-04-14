@@ -1,16 +1,16 @@
 // deno-lint-ignore-file no-empty-interface
-import React from "../deps/react.ts";
+import React from "../../deps/react.ts";
 // import { Button } from "../deps/bootstrap.ts";
 // console.log("Button:", Button);
 
 import {
   PortfolioContextProvider,
   usePortfolio,
-} from "../context/portfolio.tsx";
-import { ContentView } from "../components/ContentView.tsx";
-import { PortfolioList } from "../components/PortfolioList.tsx";
+} from "../../context/portfolio.tsx";
+import { ContentView } from "../ContentView.tsx";
+import { PortfolioList } from "../PortfolioList.tsx";
 // import { Icon } from "../components/Icon.tsx";
-import { PortfolioGroup as PortfolioGroupModel } from "../models/PortfolioGroup.ts";
+import { PortfolioGroup as PortfolioGroupModel } from "../../models/PortfolioGroup.ts";
 
 interface PortfolioSectionProps {}
 
@@ -21,7 +21,9 @@ const PortfolioSection = ({}: PortfolioSectionProps) => {
     return <div className="loading"></div>;
   }
 
-  return <PortfolioList id="mainPortfolio" groups={portfolioGroups} />;
+  return (
+    <PortfolioList id="mainPortfolio" error={error} groups={portfolioGroups} />
+  );
 
   /* <div id="portAccordion" className="accordion portfolio-list">
       <div className="accordion-item">
@@ -51,7 +53,7 @@ export interface HomePageProps {}
 
 export const HomePage = ({}: HomePageProps) => {
   return (
-    <ContentView elementId="mainPortfolio" className="row">
+    <ContentView id="mainPortfolio" className="row">
       <div id="myPersonalInfo">
       </div>
       <PortfolioContextProvider>

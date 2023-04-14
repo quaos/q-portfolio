@@ -14,7 +14,7 @@ export const GalleryImage = ({
   highlighted,
   onPreview,
   onClick,
-}: React.Props<GalleryImageProps>) => {
+}: GalleryImageProps) => {
   return (
     <div
       className={"gallery-image-wrapper " + (highlighted ? "highlighted" : "")}

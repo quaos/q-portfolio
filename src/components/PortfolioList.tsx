@@ -1,4 +1,4 @@
-import React from "../deps/react.ts";
+import React, { useState } from "../deps/react.ts";
 
 import { ImagePreviewModal } from "./ImagePreviewModal.tsx";
 import { PortfolioGroup } from "./PortfolioGroup.tsx";
@@ -22,16 +22,16 @@ export const PortfolioList = ({
 }: PortfolioListProps) => {
   const { styles } = useStyles();
 
-  const [previewingImage, setPreviewingImage] = React.useState<
+  const [previewingImage, setPreviewingImage] = useState<
     ImageModel | undefined
   >();
-  const [previewingItem, setPreviewingItem] = React.useState<
+  const [previewingItem, setPreviewingItem] = useState<
     PortfolioItemModel | undefined
   >();
   // const previewModalRef = React.createRef();
 
   const handleImagePreview = (
-    evt: any,
+    evt: React.SyntheticEvent,
     img: ImageModel,
     item: PortfolioItemModel,
   ) => {
@@ -39,7 +39,7 @@ export const PortfolioList = ({
     setPreviewingItem(item);
   };
 
-  const handleImagePreviewModalClose = (evt: React.MouseEvent<HTMLElement>) => {
+  const handleImagePreviewModalClose = (evt: React.MouseEvent) => {
     setPreviewingImage(undefined);
     setPreviewingItem(undefined);
   };
@@ -61,11 +61,11 @@ export const PortfolioList = ({
       {previewingImage && (
         <ImagePreviewModal
           key="_image-preview-modal"
-          elementId="portfolioPreviewModal"
-          image={previewingImage}
-          title={previewingItem?.title}
           description={previewingItem?.description}
+          id="portfolioPreviewModal"
+          image={previewingImage}
           onClose={handleImagePreviewModalClose}
+          title={previewingItem?.title}
         />
       )}
     </div>

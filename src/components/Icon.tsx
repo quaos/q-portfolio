@@ -1,4 +1,4 @@
-import React from "../deps/react.ts";
+import React, { DynamicComponent } from "../deps/react.ts";
 
 export enum IconSize {
   XS = "xs",
@@ -9,24 +9,24 @@ export enum IconSize {
 }
 
 export interface IconProps {
-  iconSet: string;
-  iconName: string;
-  size: IconSize;
-  Component?: string;
   className?: string;
+  Component?: DynamicComponent;
+  iconSet?: string;
+  iconName: string;
+  size?: IconSize;
 }
 
 export const Icon = ({
+  className = "",
+  Component = "i",
   iconSet,
   iconName,
-  size,
-  Component = "i",
-  className,
-}: React.Props<IconProps>) => {
+  size = IconSize.S,
+}: IconProps) => {
   let iconCls;
   switch (iconSet) {
-    case "qp":
-      iconCls = `qp-icon qp-icon-${size} qp-pic-${iconName}`;
+    case "q":
+      iconCls = `q-icon q-icon-${size} q-pic-${iconName}`;
       break;
     case "fa":
       iconCls = `fa fa-${iconName}`;
@@ -36,5 +36,5 @@ export const Icon = ({
       break;
   }
 
-  return <Component className={`${className} ${iconCls}`}></Component>;
+  return <Component className={`${iconCls} ${className}`}></Component>;
 };

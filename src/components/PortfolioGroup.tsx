@@ -8,14 +8,14 @@ import { PortfolioItem as PortfolioItemModel } from "../models/PortfolioItem.ts"
 import { Image as ImageModel } from "../models/Image.ts";
 
 interface PortfolioGroupProps {
-  data?: PortfolioGroupModel;
   className?: string;
-  parentId?: string;
+  data?: PortfolioGroupModel;
   onImagePreview: (
-    evt: any,
+    evt: React.SyntheticEvent,
     image: ImageModel,
     item: PortfolioItemModel,
   ) => void;
+  parentId?: string;
 }
 
 interface ImageWithOwnerItem extends ImageModel {
@@ -23,10 +23,10 @@ interface ImageWithOwnerItem extends ImageModel {
 }
 
 export const PortfolioGroup = ({
+  className = "",
   data,
-  className,
-  parentId,
   onImagePreview,
+  parentId,
 }: PortfolioGroupProps) => {
   const { styles } = useStyles();
   const visible = data?.visible ?? true;
@@ -74,7 +74,7 @@ export const PortfolioGroup = ({
   };
 
   const handleImagePreview = (
-    evt: React.MouseEvent<HTMLElement>,
+    evt: React.MouseEvent,
     itemID: string,
   ) => {
     const img = galleryImagesMap[itemID];
@@ -85,7 +85,7 @@ export const PortfolioGroup = ({
   };
 
   const handleImageClick = (
-    evt: React.MouseEvent<HTMLElement>,
+    evt: React.MouseEvent,
     itemID: string,
   ) => {
     setHighlightedItemIds([itemID]);
@@ -97,7 +97,7 @@ export const PortfolioGroup = ({
   };
 
   const handleItemHover = (
-    evt: React.MouseEvent<HTMLElement>,
+    evt: React.MouseEvent,
     item: PortfolioItemModel,
     hoverState: boolean,
   ) => {

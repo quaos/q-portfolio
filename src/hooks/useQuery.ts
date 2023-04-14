@@ -41,9 +41,9 @@ export function useQuery<T>({
       } else if (url != null) {
         const resp = await fetch(url.toString(), { signal });
         setResult(await resp.json() as T);
+      } else {
+        throw new Error("No data source specified.");
       }
-
-      throw new Error("No data source specified.");
     } catch (err) {
       setError(err);
     }
