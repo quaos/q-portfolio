@@ -133,6 +133,8 @@ background-size: 100% 100%;*/
 
 .tags {
   display: flex;
+  flex-wrap: wrap;
+  row-gap: 0.5rem;
   list-style-type: none;
 }
 

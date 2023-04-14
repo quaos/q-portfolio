@@ -1,30 +1,37 @@
 import { EventEmitter } from "./deps/events.ts";
-import { React } from "./deps/react.ts";
-import { Router, Link, Route, Switch} from "./deps/react-router.ts";
+import React, { useState } from "./deps/react.ts";
+import { Link, Route, Router, Routes } from "./deps/react-router.ts";
 
 import { AppContextProvider } from "./context/app.tsx";
 import { StylesContextProvider } from "./context/styles.tsx";
 // import { NavigationContextProvider } from "../context/navigation.tsx";
-// import { ContentView } from "./ContentView.tsx";
-import { Footer } from "./components/Footer.tsx";
-import { Header } from "./components/Header.tsx";
-// import { Sidebar } from "./components/Sidebar.tsx";
-import { HomeScreen } from "./screens/home.tsx";
+// import { ContentView } from "./components/ContentView.tsx";
+// import { Sidebar } from "./components/layout/Sidebar.tsx";
+import { MainLayout } from "./components/layout/MainLayout.tsx";
+import { NavLink as NavLinkModel } from "./models/NavLink.ts";
 
 export interface AppProps {
   basePath: string;
   swMessagesDispatcher?: EventEmitter;
 }
 
-export const App = ({ basePath, swMessagesDispatcher }: React.Props<AppProps>) => {
+export const App = ({ basePath, swMessagesDispatcher }: AppProps) => {
   // const basePath = Deno.env.get("REACT_BASE_PATH") ?? "";
 
-  const [navLinks, setNavLinks] = React.useState(
-    []
+  const [navLinks, setNavLinks] = useState<NavLinkModel[]>(
+    [],
   );
-  const [initState, setInitState] = React.useState(
-    false
+  const [isSidebarVisible, setIsSidebarVisible] = useState(true);
+  const [_isInitialized, setIsInitialized] = useState(
+    false,
   );
+
+  const handleToggleSidebar = (evt: React.SyntheticEvent) => {
+    evt.preventDefault();
+    setIsSidebarVisible(!isSidebarVisible);
+
+    return false;
+  };
 
   React.useEffect(() => {
     // TODO: Initialize app context with real data
@@ -34,42 +41,48 @@ export const App = ({ basePath, swMessagesDispatcher }: React.Props<AppProps>) =
         title: "Home",
         url: "/",
         usingExactMatch: true,
-        iconSet: "qp",
-        iconName: "planet"
+        iconSet: "fa",
+        iconName: "home",
+      },
+      {
+        id: 2,
+        title: "LinkedIn",
+        url: "https://www.linkedin.com/in/chakrit-worakulsawat-5a3819171/",
+        iconSet: "fa",
+        iconSubSet: "brands",
+        iconName: "linkedin",
+        isExternal: true,
+      },
+      {
+        id: 3,
+        title: "GitHub",
+        url: "https://github.com/quaos",
+        iconSet: "fa",
+        iconSubSet: "brands",
+        iconName: "github",
+        isExternal: true,
       },
     ]);
-    setInitState(true);
+    setIsInitialized(true);
 
     return () => {
       // Cleanup app context
-    }
-  }, [initState]);
-  
-  const [sidebarVisible, setSidebarVisible] = React.useState(true);
-  const dispatchToggleSidebar = (evt: Event) => {
-    evt.preventDefault();
-    setSidebarVisible(!sidebarVisible);
-
-    return false
-  }
+    };
+  }, []);
 
   return (
-    <AppContextProvider basePath={basePath} swMessagesDispatcher={swMessagesDispatcher}>
+    <AppContextProvider
+      basePath={basePath}
+      swMessagesDispatcher={swMessagesDispatcher}
+    >
       <StylesContextProvider>
         <Router>
-          <Header elementId="mainHeader"
-            links={navLinks}
-            sidebarVisible={sidebarVisible}
-            dispatchToggleSidebar={dispatchToggleSidebar} />
-          <div id="mainContainer" className="wrapper main-container">
-              {/* <Sidebar elementId="mainSidebar" links={navLinks} visible={sidebarVisible} /> */}
-              <Switch>
-                <Route path="/" exact={true}>
-                  <HomeScreen />
-                </Route>
-              </Switch>
-          </div>
-          <Footer elementId="mainFooter" />
+          <MainLayout
+            id="mainLayout"
+            navLinks={navLinks}
+            isSidebarVisible={isSidebarVisible}
+            toggleSidebar={handleToggleSidebar}
+          />
         </Router>
       </StylesContextProvider>
     </AppContextProvider>

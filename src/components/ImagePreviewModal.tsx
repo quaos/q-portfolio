@@ -1,26 +1,26 @@
-import { React } from "../deps/react.ts";
+import React, { DynamicComponent } from "../deps/react.ts";
 
 import { ContentView } from "./ContentView.tsx";
 import { Image as ImageModel } from "../models/Image.ts";
 
 export interface ImagePreviewModalProps {
+  description?: string;
+  id?: string;
   image: ImageModel;
-  title: string;
-  description: string;
-  onClose: (evt: any) => void;
-  elementId?: string;
+  onClose: (evt: React.MouseEvent) => void;
+  title?: string;
 }
 
 export const ImagePreviewModal = ({
-  image,
-  title,
   description,
+  id,
+  image,
   onClose,
-  elementId,
-}: React.Props<ImagePreviewModalProps>) => {
-  let bsModalRef: any | undefined = undefined;
+  title,
+}: ImagePreviewModalProps) => {
+  let bsModalRef: bootstrap.Modal | undefined;
 
-  const handleModalRefChange = (element: HTMLElement) => {
+  const handleModalRefChange = (element: HTMLElement | null) => {
     if (element) {
       if (!bsModalRef) {
         bsModalRef = new bootstrap.Modal(element);
@@ -32,20 +32,20 @@ export const ImagePreviewModal = ({
     }
   };
 
-  const handleModalClosing = (evt: any) => {
+  const handleModalClosing = (evt: React.MouseEvent<HTMLElement>) => {
     if (bsModalRef) {
       bsModalRef.hide();
     }
     onClose(evt);
   };
 
-  const labelId = `${elementId}_ModalTitle`;
+  const labelId = `${id}_ModalTitle`;
 
   return (
-    <div
-      id={elementId}
+    <section
+      id={id}
       className="modal show fade image-preview"
-      tabIndex="-1"
+      tabIndex={-1}
       role="dialog"
       aria-labelledby={labelId}
       aria-hidden="false"
@@ -58,9 +58,11 @@ export const ImagePreviewModal = ({
       >
         <div className="modal-content">
           <div className="modal-header">
-            <h2 className="modal-title" id={labelId}>
-              {title}
-            </h2>
+            {title && (
+              <h2 className="modal-title" id={labelId}>
+                {title}
+              </h2>
+            )}
             <button
               type="button"
               className="close"
@@ -96,6 +98,6 @@ export const ImagePreviewModal = ({
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };

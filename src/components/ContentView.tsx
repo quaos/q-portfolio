@@ -1,71 +1,88 @@
 import { Marked } from "../deps/markdown.ts";
-import { React } from "../deps/react.ts";
-import { Transformer, TransformerContext, TransformerEvent } from "../deps/html_react_transformer.ts";
+import React, { DynamicComponent, useMemo, useState } from "../deps/react.ts";
+import {
+  Transformer,
+  TransformerContext,
+  TransformerEvent,
+} from "../deps/html_react_transformer.ts";
 
 import { ExternalLink } from "./ExternalLink.tsx";
 import { Icon } from "./Icon.tsx";
 export interface ContentViewProps {
-    title?: string;
-    htmlContent?: string;
-    markdownContent?: string;
-    currentHostname?: string;
-    Component?: string;
-    elementId?: string;
-    className?: string;
+  className?: string;
+  Component?: DynamicComponent;
+  currentHostname?: string;
+  htmlContent?: string;
+  id?: string;
+  markdownContent?: string;
+  title?: string;
 }
 
 export const ContentView = ({
-    title,
-    htmlContent,
-    markdownContent,
-    currentHostname,
-    Component = "article",
-    elementId,
-    className,
-    children,
+  children,
+  className,
+  Component = "article",
+  currentHostname,
+  htmlContent,
+  id,
+  markdownContent,
+  title,
 }: React.PropsWithChildren<ContentViewProps>) => {
-    let [errors, setErrors] = React.useState<Error[]>([]);
+  const [errors, setErrors] = useState<Error[]>([]);
 
-    const HtmlRenderer = React.useMemo(() => {
-        const _transformer = new Transformer({
-            maxDepth: 20,
-        });
+  const collectError = (err: Error) => {
+    setErrors([...errors, err]);
+  };
 
-        _transformer.on(TransformerEvent.Errors, (ctx: TransformerContext) => {
-            ctx.errors.forEach(console.error);
-            setErrors(ctx.errors);
-        });
-        _transformer.on(TransformerEvent.Element, (ctx: TransformerContext) => {
-            if (ctx.component === "a") {
-                let { href } = ctx.props;
-                const targetUrl = new URL(href);
-                const isExternal = (!currentHostname) || (targetUrl.host !== currentHostname);
-                if (isExternal) {
-                    ctx.component = ExternalLink;
-                }
-            }
-        });
+  const HtmlRenderer = useMemo(() => {
+    const transformer = new Transformer({
+      maxDepth: 20,
+    });
 
-        return _transformer.getComponent(React);
-    }, []);
+    // transformer.on(TransformerEvent.Error, (ctx: TransformerContext) => {
+    //   ctx.errors.forEach(console.error);
+    //   setErrors(ctx.errors);
+    // });
+    transformer.on(TransformerEvent.Element, (ctx: TransformerContext) => {
+      if (ctx.component === "a") {
+        const { href } = ctx.props as React.AnchorHTMLAttributes<
+          HTMLAnchorElement
+        >;
+        const targetUrl = new URL(href || "#");
+        const isExternal = (!currentHostname) ||
+          (targetUrl.host !== currentHostname);
+        if (isExternal) {
+          ctx.component = ExternalLink;
+        }
+      }
+    });
 
-    if ((!htmlContent)
-        && (markdownContent)) {
-        htmlContent = Marked.parse(markdownContent).content;
-    }
+    return transformer.getComponent(React);
+  }, []);
 
-    return (
-        <Component id={elementId} className={`main-content ${className}`}>
-            {(title) ? <h2>{title}</h2> : null}
-            {((errors) && (errors.length >= 1))
-                ? <div className="error">{errors.map((err: Error) => <p>{err.message || `${err}`}</p>)}</div>
-                : null}
-            {(htmlContent)
-                ? <HtmlRenderer source={htmlContent} />
-                : children}
-            {/* {(htmlContent)
+  const renderedHtmlContent = useMemo(() =>
+    htmlContent || (
+      markdownContent ? Marked.parse(markdownContent).content : undefined
+    ), [htmlContent, markdownContent]);
+
+  return (
+    <Component id={id} className={`main-content ${className}`}>
+      {(title) ? <h2>{title}</h2> : null}
+      {((errors) && (errors.length >= 1))
+        ? (
+          <div className="error">
+            {errors.map((err: Error) => <p>{err.message || `${err}`}</p>)}
+          </div>
+        )
+        : null}
+      {renderedHtmlContent
+        ? <HtmlRenderer source={renderedHtmlContent} onError={collectError} />
+        : children}
+      {
+        /* {(htmlContent)
                 ? <div dangerouslySetInnerHTML={{ __html: htmlContent }}></div>
-                : children} */}
-        </Component>
-    )
+                : children} */
+      }
+    </Component>
+  );
 };

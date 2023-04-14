@@ -1,11 +1,19 @@
 {
+    "deno.config": "./deno.json",
     "deno.enable": true,
     "deno.unstable": true,
-    "typescript.format.enable": true,
-    "editor.formatOnSave": true,
+    "deno.lint": true,
     "deno.suggest.imports.hosts": {
         "https://esm.sh": true,
         "https://deno.land": true,
         "http://esm.sh": false
+    },
+    "typescript.format.enable": true,
+    "[typescript]": {
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll": true,
+            "source.organizeImports": false
+        },
     }
 }

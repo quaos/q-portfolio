@@ -1,48 +1,54 @@
-import { React } from "../deps/react.ts";
-
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "../deps/react.ts";
 import { useAppContext } from "./app.tsx";
 import { PortfolioGroup as PortfolioGroupModel } from "../models/PortfolioGroup.ts";
+import { useQuery, UseQueryState } from "../hooks/useQuery.ts";
 
-export interface PortfolioContextProps {
-    loading: boolean;
-    portfolioGroups: PortfolioGroupModel[];
+export interface PortfolioContextProps
+  extends Omit<UseQueryState<PortfolioGroupModel[]>, "result"> {
+  portfolioGroups: PortfolioGroupModel[];
 }
 
-export const PortfolioContext = React.createContext<PortfolioContextProps | undefined>();
+export const PortfolioContext = createContext<
+  PortfolioContextProps | undefined
+>(undefined);
 
-export interface PortfolioContextProviderProps {
-}
+// deno-lint-ignore no-empty-interface
+export interface PortfolioContextProviderProps {}
 
-export const PortfolioContextProvider = ({ children }: React.PropsWithChildren<PortfolioContextProviderProps>) => {
-    const { baseUrl } = useAppContext();
+export const PortfolioContextProvider = (
+  { children }: React.PropsWithChildren<PortfolioContextProviderProps>,
+) => {
+  const { baseUrl } = useAppContext();
+  const url = useMemo(() => new URL("/data/portfolio.json", baseUrl), [
+    baseUrl,
+  ]);
 
-    const [loading, setLoading] = React.useState(true);
-    const [portfolioGroups, setPortfolioGroups] = React.useState<PortfolioGroupModel[]>([]);
+  const { result: portfolioGroups, ...otherState } = useQuery<
+    PortfolioGroupModel[]
+  >({
+    url,
+  });
 
-    React.useEffect(async () => {
-        try {
-            const url = new URL("/data/portfolio.json", baseUrl);
-            const resp = await fetch(url.toString());
-            const _groups: PortfolioGroupModel[] = await resp.json();
-            setLoading(false);
-            setPortfolioGroups(_groups);
-        } catch (err) {
-            console.error(err);
-        }
-    }, []);
-
-    return (
-        <PortfolioContext.Provider value={{ loading, portfolioGroups }}>
-            {children}
-        </PortfolioContext.Provider>
-    );
+  return (
+    <PortfolioContext.Provider
+      value={{ ...otherState, portfolioGroups: portfolioGroups ?? [] }}
+    >
+      {children}
+    </PortfolioContext.Provider>
+  );
 };
 
 export function usePortfolio(): PortfolioContextProps {
-    const context = React.useContext(PortfolioContext);
-    if (context === undefined) {
-        throw new Error("No PortfolioContext Provider available");
-    }
+  const context = useContext(PortfolioContext);
+  if (context === undefined) {
+    throw new Error("No PortfolioContext Provider available");
+  }
 
-    return context;
+  return context;
 }

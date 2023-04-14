@@ -1,13 +1,16 @@
-import { React } from "../deps/react.ts";
-import { useHistory, useRouteMatch } from "../deps/react-router.ts";
+import React, { DynamicComponent } from "../deps/react.ts";
+import { useLocation, useMatch, useNavigate } from "../deps/react-router.ts";
 
 import { useStyles } from "../context/styles.tsx";
 
 export interface NavLinkProps {
-    to: string;
-    exact: boolean;
-    Component?: string;
-    elementId?: string;
+  Component?: DynamicComponent;
+  className?: string;
+  id?: string;
+  isExact?: boolean;
+  isExternal?: boolean;
+  style?: React.CSSProperties;
+  to: string;
 }
 
 /**
@@ -15,33 +18,45 @@ export interface NavLinkProps {
  * @param props
  */
 export const NavLink = ({
-    to,
-    exact,
-    Component = "div",
-    elementId,
-    className,
-    children,
+  children,
+  className = "",
+  Component = "div",
+  id,
+  isExact,
+  isExternal,
+  style,
+  to,
 }: React.PropsWithChildren<NavLinkProps>) => {
-    const { styles } =  useStyles();
-    const history = useHistory();
-    const routeMatch = useRouteMatch({ path: to, strict: exact });
-    const active = (routeMatch) && (!exact || routeMatch.exact);
+  const { styles } = useStyles();
+  const navigateTo = useNavigate();
+  const routeMatch = useMatch({ path: to, end: isExact });
+  const active = (routeMatch) && (!isExact || routeMatch.pathname === to);
 
-    const onClick = (evt: any) => {
-        console.log(`NavLink: Navigating to:`, to);
-        history.push(to);
-        evt.preventDefault();
+  const handleClick = (evt: React.MouseEvent<HTMLElement>) => {
+    console.log(`NavLink: Navigating to:`, to, { isExternal });
 
-        return false
+    if (!isExternal) {
+      navigateTo(to);
+      evt.preventDefault();
+      return false;
     }
 
-    return (
-        <Component id={elementId}
-            className={`nav-link ${(active) ? "active" : ""} ${className}`}
-            style={styles.NavLink}>
-            <a href={to} onClick={onClick}>
-                {children}
-            </a>
-        </Component>
-    )
+    return true;
+  };
+
+  return (
+    <Component
+      id={id}
+      className={`nav-link ${(active) ? "active" : ""} ${className}`}
+      style={{ ...styles.NavLink, ...style }}
+    >
+      <a
+        href={to}
+        onClick={handleClick}
+        target={isExternal ? "_blank" : undefined}
+      >
+        {children}
+      </a>
+    </Component>
+  );
 };

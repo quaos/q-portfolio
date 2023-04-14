@@ -1,12 +1,12 @@
-import { React } from "../deps/react.ts";
+import React from "../deps/react.ts";
 
 import { Image as ImageModel } from "../models/Image.ts";
 
 export interface GalleryImageProps {
   image: ImageModel;
   highlighted: boolean;
-  onPreview: (evt: any) => void;
-  onClick: (evt: any) => void;
+  onPreview: (evt: React.MouseEvent<HTMLElement>) => void;
+  onClick: (evt: React.MouseEvent<HTMLElement>) => void;
 }
 
 export const GalleryImage = ({
@@ -14,7 +14,7 @@ export const GalleryImage = ({
   highlighted,
   onPreview,
   onClick,
-}: React.Props<GalleryImageProps>) => {
+}: GalleryImageProps) => {
   return (
     <div
       className={"gallery-image-wrapper " + (highlighted ? "highlighted" : "")}

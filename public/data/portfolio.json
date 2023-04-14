@@ -20,17 +20,33 @@
                     "title": "WebSphereMQ Integration Middleware screenshot"
                 },
                 "description": "This JavaEE application for a banking client accepts web service requests from frontend and dispatch to other services through Websphere MQ backbone to query information."
+            },
+            {
+                "id": "portItem_1_3_claim_service",
+                "title": "Claim Service API",
+                "image": {
+                    "url": "assets/img/portfolio-item-1-3-claim-service-api.png",
+                    "title": "Claim Service API Postman example screenshot"
+                },
+                "description": "This NestJS application is designed and implemented by me to perform as new centralized API service for querying and submitting claims from my employer's various channels/platforms, web apps and mobile apps used by customers."
             }
         ],
         "tags": [
             "java",
             "tomcat",
             "spring",
+            "nodejs",
+            "nestjs",
             "soap",
             "rest",
+            "microservices",
             "mysql",
             "mssql",
+            "postgresql",
+            "redis",
+            "s3",
             "networking",
+            "kubernetes",
             "as400",
             "websphere-mq",
             "ivr",
@@ -88,7 +104,7 @@
                     "url": "assets/img/portfolio-item-3-1-qpweb.png",
                     "title": "qpstudio.cc website screenshot"
                 },
-                "description": "My little creative studio.\n\nThe Website is defined to be as cozy as home. And now with a minigame you can play!"
+                "description": "My little creative studio.\n\nThe Website is designed to be as cozy as home. And now with a minigame you can play!\n\nSee: https://qpstudio-team.netlify.app"
             },
             {
                 "id": "portItem_3_2_mern_shopping",
@@ -104,13 +120,14 @@
             "javascript",
             "typescript",
             "nodejs",
+            "deno",
             "reactjs",
             "html5",
             "css",
+            "bootstrap",
             "material-ui",
             "webgl",
             "game-dev",
-            "deno",
             "postgresql",
             "mongodb",
             "sendgrid"
@@ -166,7 +183,6 @@
                 },
                 "description": "Used for Microservices architecture, receiving load-balanced REST API requests and dispatch them to backing services through RabbitMQ or other AMQP-based systems\n\nSee: https://github.com/quaos/deno-rest2amqp"
             }
-
         ],
         "tags": [
             "javascript",

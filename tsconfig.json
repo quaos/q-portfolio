@@ -1,7 +1,7 @@
 {
   "_COMMENT_noImplicitReturns": "Workaround: disable this rule for markdown module",
   "compilerOptions": {
-    "isolatedModules": false,
+    "isolatedModules": true,
     "allowJs": false,
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
@@ -9,7 +9,7 @@
     "checkJs": false,
     "jsx": "react",
     "jsxFactory": "React.createElement",
-    "lib": ["deno.ns", "DOM", "ESNext"],
+    "lib": ["deno.ns", "dom", "esnext"],
     "noFallthroughCasesInSwitch": false,
     "noImplicitAny": true,
     "noImplicitReturns": false,
@@ -27,5 +27,5 @@
     "suppressExcessPropertyErrors": false,
     "suppressImplicitAnyIndexErrors": false
   },
-  "deno": true
+  "deno": true,
 }

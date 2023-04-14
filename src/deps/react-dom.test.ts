@@ -1,7 +1,8 @@
-import { ReactDOM } from "./react-dom.ts";
-import { assert, assertEquals } from "./std.ts";
+import { createPortal, createRoot } from "./react-dom.ts";
+import { assertEquals } from "./std.ts";
 
-Deno.test("ReactDOM deps has render function", () => {
-  assert("render" in ReactDOM);
-  assertEquals(typeof ReactDOM.render, "function");
+Deno.test("React DOM deps has exported functions", () => {
+  // assert("createPortal" in ReactDOM);
+  assertEquals(typeof createPortal, "function");
+  assertEquals(typeof createRoot, "function");
 });

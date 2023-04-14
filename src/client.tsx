@@ -1,7 +1,7 @@
 // import { EventEmitter } from "./deps/events.ts";
-import { React } from "./deps/react.ts";
-import { ReactDOM } from "./deps/react-dom.ts";
-import * as _bs from "./deps/bootstrap-global.ts";
+import React from "./deps/react.ts";
+import { createRoot } from "./deps/react-dom.ts";
+import * as _bs from "./deps/bootstrap-global.d.ts";
 
 import { App } from "./App.tsx";
 // import serviceWorkerContainer from "./service-worker/container.ts";
@@ -19,19 +19,17 @@ import { App } from "./App.tsx";
 //   });
 // });
 
-window.addEventListener("DOMContentLoaded", (evt) => {
+globalThis.addEventListener("DOMContentLoaded", (evt) => {
   console.log("window.DOMContentLoaded event:", evt);
-  // @ts-ignore
   const baseNode: HTMLElement | undefined =
     document.getElementsByTagName("base")[0];
   const basePath = baseNode?.getAttribute("href") ?? "/";
 
   // swProm.then(({ messagesDispatcher }) => {
-  ReactDOM.render(
+  const reactRoot = createRoot(document.getElementById("root")!);
+  reactRoot.render(
     <App basePath={basePath} />,
     // <App swMessagesDispatcher={messagesDispatcher} />,
-    // @ts-ignore
-    document.getElementById("root")
   );
   // });
 });

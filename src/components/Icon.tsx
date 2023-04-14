@@ -1,4 +1,4 @@
-import { React } from "../deps/react.ts";
+import React, { DynamicComponent } from "../deps/react.ts";
 
 export enum IconSize {
   XS = "xs",
@@ -9,32 +9,44 @@ export enum IconSize {
 }
 
 export interface IconProps {
-  iconSet: string;
-  iconName: string;
-  size: IconSize;
-  Component?: string;
   className?: string;
+  Component?: DynamicComponent;
+  iconSet?: string;
+  iconSubSet?: string;
+  iconName: string;
+  size?: IconSize;
 }
 
 export const Icon = ({
-  iconSet, iconName, size,
+  className = "",
   Component = "i",
-  className,
-}: React.Props<IconProps>) => {
+  iconSet,
+  iconSubSet,
+  iconName,
+  size = IconSize.S,
+}: IconProps) => {
   let iconCls;
   switch (iconSet) {
-      case "qp":
-          iconCls = `qp-icon qp-icon-${size} qp-pic-${iconName}`;
-          break;
-      case "fa":
-          iconCls = `fa fa-${iconName}`;
-          break;
-      default:
-          iconCls = "";
-          break;
+    case "q":
+      iconCls = [
+        "q-icon",
+        size ? `q-icon-${size}` : undefined,
+        `q-pic-${iconName}`,
+      ]
+        .filter((part) => !!part).join(" ");
+      break;
+    case "fa":
+      iconCls = [
+        "fa",
+        iconSubSet ? `fa-${iconSubSet}` : undefined,
+        `fa-${iconName}`,
+      ]
+        .filter((part) => !!part).join(" ");
+      break;
+    default:
+      iconCls = "";
+      break;
   }
 
-  return (
-    <Component className={`${className} ${iconCls}`}></Component>
-  )
+  return <Component className={`${iconCls} ${className}`}></Component>;
 };
