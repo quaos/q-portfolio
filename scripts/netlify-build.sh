@@ -9,7 +9,7 @@ export PATH="$DENO_INSTALL/bin:$PATH"
 
 deno --version
 
-npm install --global yarn
+which yarn || npm install --global yarn
 yarn --version
 
 echo "# Finished preparing build environment"
