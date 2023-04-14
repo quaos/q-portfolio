@@ -1,7 +1,6 @@
 import React, { DynamicComponent } from "../../deps/react.ts";
-import { Link, useMatch, useNavigate } from "../../deps/react-router.ts";
 
-import { Icon } from "../Icon.tsx";
+import { Icon, IconSize } from "../Icon.tsx";
 import { NavLink } from "../NavLink.tsx";
 import { useStyles } from "../../context/styles.tsx";
 import { NavLink as NavLinkModel } from "../../models/NavLink.ts";
@@ -18,20 +17,25 @@ export const SidebarLink = ({
   id,
   link,
 }: React.Props<SidebarLinkProps>) => {
+  const { styles } = useStyles();
+
   return (
     <NavLink
+      key={link.id}
+      className="sidebar-link"
       Component={Component}
       id={id}
-      key={link.id}
+      isExact={link.usingExactMatch}
+      isExternal={link.isExternal}
+      style={styles.SidebarLink}
       to={link.url}
-      exact={link.usingExactMatch}
-      className="sidebar-link"
     >
       <Icon
         key="link-icon"
         className="nav-link-icon"
-        size="s"
+        size={IconSize.S}
         iconSet={link.iconSet}
+        iconSubSet={link.iconSubSet}
         iconName={link.iconName}
       />
       &nbsp;<span key="link-title" className="nav-link-title">

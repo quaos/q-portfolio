@@ -6,8 +6,9 @@ import { useStyles } from "../context/styles.tsx";
 export interface NavLinkProps {
   Component?: DynamicComponent;
   className?: string;
-  exact: boolean;
   id?: string;
+  isExact?: boolean;
+  isExternal?: boolean;
   style?: React.CSSProperties;
   to: string;
 }
@@ -20,22 +21,27 @@ export const NavLink = ({
   children,
   className = "",
   Component = "div",
-  exact,
   id,
+  isExact,
+  isExternal,
   style,
   to,
 }: React.PropsWithChildren<NavLinkProps>) => {
   const { styles } = useStyles();
   const navigateTo = useNavigate();
-  const routeMatch = useMatch({ path: to, end: exact });
-  const active = (routeMatch) && (!exact || routeMatch.pathname === to);
+  const routeMatch = useMatch({ path: to, end: isExact });
+  const active = (routeMatch) && (!isExact || routeMatch.pathname === to);
 
   const handleClick = (evt: React.MouseEvent<HTMLElement>) => {
-    console.log(`NavLink: Navigating to:`, to);
-    navigateTo(to);
-    evt.preventDefault();
+    console.log(`NavLink: Navigating to:`, to, { isExternal });
 
-    return false;
+    if (!isExternal) {
+      navigateTo(to);
+      evt.preventDefault();
+      return false;
+    }
+
+    return true;
   };
 
   return (
@@ -44,7 +50,11 @@ export const NavLink = ({
       className={`nav-link ${(active) ? "active" : ""} ${className}`}
       style={{ ...styles.NavLink, ...style }}
     >
-      <a href={to} onClick={handleClick}>
+      <a
+        href={to}
+        onClick={handleClick}
+        target={isExternal ? "_blank" : undefined}
+      >
         {children}
       </a>
     </Component>

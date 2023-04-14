@@ -29,7 +29,8 @@ export const HeaderNavbarLink = ({
       className="header-navbar-link"
       Component={Component}
       id={id}
-      exact={link.usingExactMatch}
+      isExact={link.usingExactMatch}
+      isExternal={link.isExternal}
       style={styles.HeaderNavbarLink}
       to={link.url}
     >
@@ -38,6 +39,7 @@ export const HeaderNavbarLink = ({
           <Icon
             size={IconSize.S}
             iconSet={link.iconSet}
+            iconSubSet={link.iconSubSet}
             iconName={link.iconName}
           />
         )}

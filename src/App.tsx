@@ -41,8 +41,26 @@ export const App = ({ basePath, swMessagesDispatcher }: AppProps) => {
         title: "Home",
         url: "/",
         usingExactMatch: true,
-        iconSet: "qp",
-        iconName: "planet",
+        iconSet: "fa",
+        iconName: "home",
+      },
+      {
+        id: 2,
+        title: "LinkedIn",
+        url: "https://www.linkedin.com/in/chakrit-worakulsawat-5a3819171/",
+        iconSet: "fa",
+        iconSubSet: "brands",
+        iconName: "linkedin",
+        isExternal: true,
+      },
+      {
+        id: 3,
+        title: "GitHub",
+        url: "https://github.com/quaos",
+        iconSet: "fa",
+        iconSubSet: "brands",
+        iconName: "github",
+        isExternal: true,
       },
     ]);
     setIsInitialized(true);

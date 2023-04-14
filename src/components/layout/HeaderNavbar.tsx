@@ -30,7 +30,7 @@ export const HeaderNavbar = ({
       className={`navbar ${className}`}
       style={styles.HeaderNavbar}
     >
-      <ul className="nav nav-pills">
+      <ul className="nav">
         {links.map((link: NavLinkModel) => (
           <HeaderNavbarLink
             key={`${link.id}`}
